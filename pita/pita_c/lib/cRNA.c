@@ -108,7 +108,8 @@ int main(int argc, char **argv){
       /*
       //join:
       ostringstream oss;
-      copy(el_elim.begin(), el_elim.end()-1, ostream_iterator<string>(oss, "\t")); //Convert all but the last element to avoid a trailing "\t"
+      //Convert all but the last element to avoid a trailing "\t"
+      copy(el_elim.begin(), el_elim.end()-1, ostream_iterator<string>(oss, "\t"));
       oss << el_elim.back(); //Now add the last element with no delimiter
       string vec2string = oss.str();
       //push:
