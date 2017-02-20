@@ -11,6 +11,8 @@
 
 using namespace std;
 
+vector<string> getdGduplexes(vector<string> vIn);
+void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut);
 vector<string> split(const string &s, char delim);
 void loadArg(int argc, const char **argv, char flag, int var);
 void printHelp();
@@ -101,11 +103,16 @@ int main(int argc, char **argv){
       string target = utr.substr(startpos -1, maxtargetLen);
       int real_start = max(endpos - DDG_OPEN +1,1);
 
+      string del = "\t";
+
       //push(@headerInputArray,join ("\t", splice(@row, 0, 8))); si traduce in:
       //splice:
       vector<string> el_elim;
       auto it = next(row.begin(), 8);
       move(row.begin(), it, back_inserter(el_elim));
+      join_and_push(el_elim, del, headerInputArray); 
+
+      /*
       //join:
       ostringstream oss;
       copy(el_elim.begin(), el_elim.end()-1, ostream_iterator<string>(oss, "\t")); //Convert all but the last element to avoid a trailing "\t"
@@ -113,15 +120,103 @@ int main(int argc, char **argv){
       string vec2string = oss.str();
       //push:
       headerInputArray.push_back(vec2string);
-      
-       
+      */
 
-      
+      //push(@dGduplexesInputArray, join ("\t", $miRNA, $target, $force_binding_i, $force_binding_j));    
+      vector<string> vectTmp = {miRNA, target, force_binding_i, force_binding_j};
+      join_and_push(vectTmp, del, dGduplexesInputArray);
 
+      //push(@ddGInputArray, join ("\t", $miRNA, $utr, $real_start, $endpos, $upstream_rest, $downstream_rest, $ddG_area));       
+      vectTmp = {miRNA, utr, real_start, endpos, upstream_rest, downstream_rest, ddG_area};
+      join_and_push(vectTmp, del, ddGInputArray);
+    }//fine for nlines
+    
+    int arraySize = headerInputArray.size();
+    cout << "\nComputing " << arraySize << "results: ";
 
-    }    
-  }
+    vector<string> dGduplexesOutputArray = getdGduplexes(dGduplexesInputArray);
+
+  }//fine while
   return 0;
+}
+
+//#################################################################################################################################
+
+vector<string> getdGduplexes(vector<string> vIn){
+
+    vector<string> vOut;
+
+    ofstream myfile("tmp_seqfile1");
+    if(myfile.is_open()){
+      int insize = vIn.size();
+      int i;
+      char del = '\t';
+      for(i=0; i<insize; i++){
+        string oneTarget = vIn[i];
+	vector vSplit = split(oneTarget, del);
+	int j;
+	for(j=0; j<vSpilt.size(); j++){
+	   myfile << vSlit[j] << "\n";
+	}
+      }
+      myfile.close();
+    }
+    else cout << "Could not open temporary sequence file.\n";
+
+    //Call RNAduplex and extract result dGs and length
+    int ii;
+    auto cmd = RNAddG_EXE_DIR + "/RNAduplex -5 0 < tmp_seqfile1";
+    cout << "Calling RNAduplex with ";
+    for(ii=0; ii<insize; i++)
+       cout << vIn[ii] << " ";
+    cout << "targets... ";
+
+    //my $result_of_cmd = `$cmd`;
+    auto command_line = cmd + " > tmp_output_cmdLine.txt";
+    system(command_line);
+    
+    ifstream file("tmp_output_cmdLine.txt");
+    string str;
+    string result_of_cmd;
+    while(getline(file, str)){
+       result_of_cmd += str;
+       result_of_cmd.push_back('\n');
+    }
+
+    vector<string> resArray = split(result_of_cmd, '\n');
+
+    int outsize = resArray.size();
+
+    if(insize != outsize)
+       cout << "RNAduplex failure. Result was " << result_of_cmd << "\n";
+
+    for(ii=0; ii<outsize; ii++){
+       string resline = resArray[ii];
+       vector<string> items  = split(resline, '\t');
+       vector<string> small = {items[6], items[7], items[8], items[9]};
+       join_and_push(small, "\t", vOut);
+    }
+
+    return vOut;
+}
+
+void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut){
+    ostringstream oss;
+    copy(vIn.begin(), vIn.end()-1, ostream_iterator<string>(oss, delimit)); //Convert all but the last element to avoid a trailing "delimit"
+    oss<< vIn.back(); //Now add the last element with no delimiter
+    string vec2string = oss.str();
+    //push:
+    vOut.push_back(vec2string);
+}
+
+vector<string> split(const string &s, char delim) {
+    vector<string> elems;
+    stringstream ss(s);
+    string item;
+    while(getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
 }
 
 void loadArg(int argc, const char **argv, char flag, int var){
@@ -152,18 +247,6 @@ printf("    -dgtl <num>:         Target length when opening for ddG calculation 
 printf("    -ddgarea <num>:      Area upstream and downstream around target to fold (default: 70) \n");
 printf("    -no3max:             Do not compute 3' max value and ratio (saves time)\n");
 printf("    -components <file>:  Print the components of the ddG calculation into the given file.\n");
-}
-
-
-
-vector<string> split(const string &s, char delim) {
-    vector<string> elems;
-    stringstream ss(s);
-    string item;
-    while(getline(ss, item, delim)) {
-        elems.push_back(item);
-    }
-    return elems;
 }
 
 

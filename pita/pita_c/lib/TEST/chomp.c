@@ -8,6 +8,7 @@
 #include <iterator>
 #include <algorithm>
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -27,7 +28,7 @@ string xx = "aaa\tbbb\tttt\tccc\tdddt\tee\tfff\tgg\thhh\tuuuu\tkkkkkk\tt\tbuxc";
 const string string_test(xx);
 vector<string> string_splitted = split(string_test, '\t');
 
-cout <<"\n"<< xx <<"\n\n";
+cout <<"\n"<< xx <<"\n";
 for(int i =0 ; i < string_splitted.size() ; ++i)
         cout << string_splitted[i] <<endl;
 
@@ -46,7 +47,7 @@ cout << "\n> el_elim: ";
 for(int i =0 ; i < el_elim.size() ; ++i)
         cout << el_elim[i] << " ";
 
-cout << "\n\n";
+cout << "\n";
 
 //join:
 ostringstream oss;
@@ -66,13 +67,42 @@ vettore_string.push_back(vec2string);
 for(int i =0 ; i < vettore_string.size() ; ++i)
         cout << vettore_string[i] << " ## ";
 
+cout << "\n";
+string xx1 = "ciao";
+string yy = "eheheh";
+string zz = "bibi";
+string hh = "trallallero";
+vector<string> mah = {xx1, yy, zz, hh};
+for(int i =0 ; i < mah.size() ; ++i)
+        cout << mah[i] << " ## ";
+
+cout << "\n";
+
+cout << "cambio....\n";
+mah = {yy, xx1, zz};
+for(int i =0 ; i < mah.size() ; ++i)
+        cout << mah[i] << " ## ";
+
+cout << "\n";
 
 
+system( "echo \"ciao\nelena\nsono\nuna\nprova\nmammamiaricciolino...\n\nNONPENSARCI\n\" > PROVA.txt" );
 
+ifstream fl("PROVA.txt");
+string output_cmd;
+fl >> output_cmd;
 
-
+cout << "output comando nel file PROVA.txt: " << output_cmd << "\n\n";
 
 
 return 0;
 }
+
+
+
+
+
+
+
+
 
