@@ -11,11 +11,15 @@
 
 using namespace std;
 
+//#############################################################################
+
 vector<string> getdGduplexes(vector<string> vIn);
 void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut);
 vector<string> split(const string &s, char delim);
 void loadArg(int argc, const char **argv, char flag, int var);
 void printHelp();
+
+//##############################################################################
 
 int main(int argc, char **argv){
 
@@ -34,8 +38,7 @@ int main(int argc, char **argv){
   if(!fl.is_open()){
 	cout << "Could not open file " << file << "\n";
   }
-  
- 
+   
   //Define variable and set default
   int ddG_area        = 70;
   int FULL_TL         = 50;
@@ -143,7 +146,6 @@ int main(int argc, char **argv){
 //#################################################################################################################################
 
 vector<string> getdGduplexes(vector<string> vIn){
-
     vector<string> vOut;
 
     ofstream myfile("tmp_seqfile1");
@@ -199,7 +201,7 @@ vector<string> getdGduplexes(vector<string> vIn){
 
     return vOut;
 }
-
+//......................................................................................................................................
 void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut){
     ostringstream oss;
     copy(vIn.begin(), vIn.end()-1, ostream_iterator<string>(oss, delimit)); //Convert all but the last element to avoid a trailing "delimit"
@@ -208,7 +210,7 @@ void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut){
     //push:
     vOut.push_back(vec2string);
 }
-
+//......................................................................................................................................
 vector<string> split(const string &s, char delim) {
     vector<string> elems;
     stringstream ss(s);
@@ -218,13 +220,13 @@ vector<string> split(const string &s, char delim) {
     }
     return elems;
 }
-
+//......................................................................................................................................
 void loadArg(int argc, const char **argv, char flag, int var){
   if(checkCmdLineFlag(argc, argv, flag)){
     var = getCmdLineArgumentInt(argc, argv, flag);
   }
 }
-
+//......................................................................................................................................
 void printHelp(){
 printf("Usage: RNAddG_compute.pl <file>\n\n");
 printf("	Compute the dG energies of potential target sites whose seed is given in the external\n");
@@ -248,7 +250,7 @@ printf("    -ddgarea <num>:      Area upstream and downstream around target to f
 printf("    -no3max:             Do not compute 3' max value and ratio (saves time)\n");
 printf("    -components <file>:  Print the components of the ddG calculation into the given file.\n");
 }
-
+//......................................................................................................................................
 
 
 
