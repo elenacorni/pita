@@ -2,18 +2,37 @@
 #include <assert.h>
 #include <libgen.h>
 #include <string.h>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
 
 #include "helper_string.h"
 
-void loadArg(int argc, const char **argv, char flag, int var){
-  if(checkCmdLineFlag(argc, argv, flag)){
-    var = getCmdLineArgumentInt(argc, argv, flag);
-  }
-}
+using namespace std;
+
+vector<string> split(const string &s, char delim);
+void loadArg(int argc, const char **argv, char flag, int var);
+void printHelp();
 
 int main(int argc, char **argv){
+
   const char *RNAHYBRID_EXE_DIR = "Bin/RNAHybrid/RNAhybrid-2.1/src";
   const char *$RNAddG_EXE_DIR 	= "Bin/ViennaRNA/ViennaRNA-1.6/Progs/";
+
+  if(checkCmdLineFlag(argc, argv, "help")){
+	printHelp();
+  	return 0;
+  }
+
+  string file_ref;
+  string file = argv[1];
+
+  ifstream fl(file);
+  if(!fl.is_open()){
+	cout << "Could not open file " << file << "\n";
+  }
+  
  
   //Define variable and set default
   int ddG_area        = 70;
@@ -30,8 +49,6 @@ int main(int argc, char **argv){
   char *file_ref, *file;
   
   //Load arg from command line..
-  //loadArg(argc, argv, flag, var);
-  
   getCmdLineArgumentString(argc,(const char **)argv, "file",     &file);
   getCmdLineArgumentString(argc,(const char **)argv, "file_ref", &file_ref);
   
@@ -43,31 +60,7 @@ int main(int argc, char **argv){
   loadArg(argc,(const char **)argv, "upstream_rest",   &upstream_rest);
   loadArg(argc,(const char **)argv, "downstream_rest", &downstream_rest);
   loadArg(argc,(const char **)argv, "noforce",         &no_force);
-/*  
-  if(checkCmdLineFlag(argc, (const char **)argv, "ddgarea")){
-    ddG_area = getCmdLineArgumentInt(argc, (const char **)argv, "ddgarea");
-  }
-  if(checkCmdLineFlag(argc, (const char **)argv, "tl")){
-    FULL_TL = getCmdLineArgumentInt(argc, (const char **)argv, "tl");
-  }
-  if(checkCmdLineFlag(argc, (const char **)argv, "dgtl")){
-    DDG_OPEN = getCmdLineArgumentInt(argc, (const char **)argv, "dgtl");
-  }
-  if(checkCmdLineFlag(argc, (const char **)argv, "3max")){
-    include_3max = getCmdLineArgumentInt(argc, (const char **)argv, "3max");
-  }
-  if(checkCmdLineFlag(argc, (const char **)argv, "ddG_v4")){
-    include_ddG_v4 = getCmdLineArgumentInt(argc, (const char **)argv, "ddG_v4");
-  }
-  if(checkCmdLineFlag(argc, (const char **)argv, "upstream_rest")){
-    upstream_rest = getCmdLineArgumentInt(argc, (const char **)argv, "upstream_rest");
-  }
-  if(checkCmdLineFlag(argc, (const char **)argv, "downstream_rest")){
-    downstream_rest = getCmdLineArgumentInt(argc, (const char **)argv, "downstream_rest");
-  }
-  if(checkCmdLineFlag(argc, (const char **)argv, "noforce")){
-    no_force = getCmdLineArgumentInt(argc, (const char **)argv, "noforce");
-  }*/
+  
   getCmdLineArgumentString(argc,(const char **)argv, "components", &components);
   
   //Step over all Locations
@@ -75,24 +68,103 @@ int main(int argc, char **argv){
   int bunch_size = 1000;
   
   while(!done){
-    char *dGduplexesInputArray;
-    char *ddGInputArray;
-    char *headerInputArray;
-    int record;
+    vector<string> dGduplexesInputArray;
+    vector<string> ddGInputArray;
+    vector<string> headerInputArray;
+    string record;
     
     int nlines;
     for(nlines=0; nlines<bunch_size, nlines++){
+      if(!(fl >> record)){
+	done = 1;
+	break;
+      }
+	
+      //chomp function:
+      vector<string> row = split(record, '\t');
+
+      int endpos = row[2];
+      string miRNA  = row[8];
+      string utr    = row[11];
+      string force_binding_i = "";
+      string force_binding_j = "";
+
+      if(!no_force){
+	force_binding_i = row[9];
+	force_binding_i = row[10];
+      }
+
+      //Calculate begining of target but make sure we're still in the UTR
+      int startpos = max(endpos - FULL_TL + 1,1);
       
-    }
-    
+      int maxtargetLen = endpos - startpos +1;
+      string target = utr.substr(startpos -1, maxtargetLen);
+      int real_start = max(endpos - DDG_OPEN +1,1);
+
+      //push(@headerInputArray,join ("\t", splice(@row, 0, 8))); si traduce in:
+      //splice:
+      vector<string> el_elim;
+      auto it = next(row.begin(), 8);
+      move(row.begin(), it, back_inserter(el_elim));
+      //join:
+      ostringstream oss;
+      copy(el_elim.begin(), el_elim.end()-1, ostream_iterator<string>(oss, "\t")); //Convert all but the last element to avoid a trailing "\t"
+      oss << el_elim.back(); //Now add the last element with no delimiter
+      string vec2string = oss.str();
+      //push:
+      headerInputArray.push_back(vec2string);
+      
+       
+
+      
+
+
+    }    
   }
   return 0;
 }
 
+void loadArg(int argc, const char **argv, char flag, int var){
+  if(checkCmdLineFlag(argc, argv, flag)){
+    var = getCmdLineArgumentInt(argc, argv, flag);
+  }
+}
+
+void printHelp(){
+printf("Usage: RNAddG_compute.pl <file>\n\n");
+printf("	Compute the dG energies of potential target sites whose seed is given in the external\n");
+printf("	tab file.\n\n");
+printf("	Output consists of the input ID, followed by the following:\n\n");
+printf("        Type         miRNA coordinates           Target coordinates\n");
+printf("        ====         =================           ==================\n");
+printf("        target_length\n");
+printf("        dG all       nt 1 and up                 nt 1-FULL_TL\n");
+printf("        dG 5'        nt 1-9                      computed\n");
+printf("        dG 3'        nt 10 and up                computed\n");
+printf("        dG0\n");
+printf("        dG1\n");
+printf("        ddG_v4\n");
+printf("        dG 3' max    nt 10 and up                Reverse complement of\n");
+printf("                                                 miRNA bases 10 and up\n");
+printf("        dG 3' ratio\n\n");
+printf("    -tl <num>:           Maximal target length (default: 50)\n");
+printf("    -dgtl <num>:         Target length when opening for ddG calculation (default: 25)\n");
+printf("    -ddgarea <num>:      Area upstream and downstream around target to fold (default: 70) \n");
+printf("    -no3max:             Do not compute 3' max value and ratio (saves time)\n");
+printf("    -components <file>:  Print the components of the ddG calculation into the given file.\n");
+}
 
 
 
-
+vector<string> split(const string &s, char delim) {
+    vector<string> elems;
+    stringstream ss(s);
+    string item;
+    while(getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
 
 
 
