@@ -194,7 +194,8 @@ vector<string> getdGduplexes(vector<string> vIn){
 //.............................................................................
 void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut){
     ostringstream oss;
-    copy(vIn.begin(), vIn.end()-1, ostream_iterator<string>(oss, delimit)); //Convert all but the last element to avoid a trailing "delimit"
+    //Convert all but the last element to avoid a trailing "delimit"
+    copy(vIn.begin(), vIn.end()-1, ostream_iterator<string>(oss, delimit));
     oss<< vIn.back(); //Now add the last element with no delimiter
     string vec2string = oss.str();
     //push:
