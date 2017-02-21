@@ -14,7 +14,7 @@
 using namespace std;
 
 //#############################################################################
-vector<string> extract_sequence(string start, string end, string us, string ds, string sequence);
+vector<string> extract_sequence(int start, int end, int us, int ds, string sequence);
 vector<string> getddG(vector<string> vIn);
 vector<string> getdGduplexes(vector<string> vIn);
 vector<string> split(const string &s, char delim);
@@ -136,6 +136,23 @@ int main(int argc, char **argv){
     vector<string> dGduplexesOutputArray = getdGduplexes(dGduplexesInputArray);
     vector<string> ddGOutputArray        = getddG(ddGInputArray);
 
+    int i;
+    string del = '\t';
+    for(i=0; i<arraySize; i++){
+      vector<string> v1 = split(dGduplexesOutputArray[i], del);
+      vector<string> v2 = split(ddGOutputArray[i], del);
+
+      //$ddGall = $dGall + ($dG1 - $dG0);
+      int tmp = stoi(v1[1]) + (stoi(v2[2]) - stoi(v2[1]));
+      v2[0] = tmp.str();
+
+      int ddG_v4 = 0;
+      int dG3max = 0;
+      int dG3ratio = 0;
+
+      string printOut = headerInputArray[$i] + "\t" + v1[0] + "\t" + v1[1] + "\t" + v1[2] + "\t" + v1[3] + "\t" + v2[0] + "\t" + v2[1] + "\t" + v2[2] + "\t" + ddG_v4 + "\t" + dG3max + "\t" + dG3ratio + "\n";
+    }
+
   }//fine while
   return 0;
 }
@@ -156,21 +173,68 @@ vector<string> getddG(vector<string> vIn){
 	//Extract area around sequence
 	int arg3 = stoi(vSplit[5]) + stoi(vSplit[6]);
 	int arg4 = stoi(vSplit[4]) + stoi(vSplit[6]);
-	seq_area = extract_sequence(vSplit[2],vSplit[3],arg3,arg4,vSplit[1]);
+	seq_area = extract_sequence(stoi(vSplit[2]),stoi(vSplit[3]),arg3,arg4,vSplit[1]);
+	myfile << seq_area[2] << "\n";
       }
       myfile.close();
     }
     else cout << "Could not open temporary sequence file.\n";
 
+    if(upstream_res.compare("0") != 0){
+       //$upstream_rest =~ s/^0*//;
+       /* Because we're gonna call C with this argument and
+	* sscanf is problematic with leading zeros*/
+       while(upstream_res[0] == '0'){
+           upstream_res.erase(0,1);
+       }
+    }
+
+    string seq = seq_area[2];
+    string bindStart = seq_area[0];
+    string bindEnd   = seq_area[1];
+
+    int target_len = stoi(bindEnd) - stoi(bindStart) + 1 + stoi(downstream_rest);
+
+    auto cmd = RNAddG_EXE_DIR + "/RNAddG4 -u " + upstream_rest + " -s " + bindEnd + " -f " + target_len.str() + " -t " + target_len.str() + " < tmp_seqfile2";
+
+    int ii;
+    cout <<  "Calling RNAddG with "
+    for(ii=0; ii<vIn.size(); i++)
+       cout << vIn[ii] << " ";)
+    cout << "targets... \n";
+
+    //my @resArray = split (/\n/, `$cmd`);
+    auto command_line = cmd + " > tmp_output_cmdLine1.txt";
+    system(command_line);
+    ifstream file("tmp_output_cmdLine1.txt");
+    string str;
+    string result_of_cmd;
+    while(getline(file, str)){
+      result_of_cmd += str;
+      result_of_cmd.push_back('\n');
+    }				          }
+    vector<string> resArray = split(result_of_cmd, '\n');
+
+
+    for(ii=0; ii<outsize; ii++){
+      string resline = resArray[ii];
+      vector<string> ddG_values = split(resline, '\n');
+      vector<string> small = {ddG_values[6],ddG_values[3],ddG_values[4]};
+      join_and_push(small, "\t", vOut);
+    }
 
     return vOut;
 }
 //.............................................................................
-vector<string> extract_sequence(int start, int end, int us, string ds, string sequence){
+vector<string> extract_sequence(int start, int end, int us, int ds, string sequence){
     int us_start = (start > us ? start - us : 1);
     int ds_end   = ((end + ds)< sequence.length() ? end + ds : sequence.length());
     int actual_start = start - us_start + 1;
-    string string1 =  
+    string string1 = sequence.substr(us_start -1, (ds_end - us_start) + 1);
+    int actual_end = actual_start + abs(end - start);
+    vector<string> result = {actual_start.str(), actual_end.str(), string1};
+
+    return result;
 }
 //.............................................................................
 vector<string> getdGduplexes(vector<string> vIn){
