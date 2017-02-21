@@ -6,14 +6,19 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <iterator>
+#include <algorithm>
+#include <stdlib.h>
 #include "helper_string.h"
 
 using namespace std;
 
 //#############################################################################
+vector<string> extract_sequence(string start, string end, string us, string ds, string sequence);
+vector<string> getddG(vector<string> vIn);
 vector<string> getdGduplexes(vector<string> vIn);
-void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut);
 vector<string> split(const string &s, char delim);
+void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut);
 void loadArg(int argc, const char **argv, char flag, int var);
 void printHelp();
 
@@ -129,12 +134,45 @@ int main(int argc, char **argv){
     cout << "\nComputing " << arraySize << "results: ";
 
     vector<string> dGduplexesOutputArray = getdGduplexes(dGduplexesInputArray);
+    vector<string> ddGOutputArray        = getddG(ddGInputArray);
 
   }//fine while
   return 0;
 }
 
 //#############################################################################
+vector<string> getddG(vector<string> vIn){
+    vector<string> vOut;
+    string upstream_rest;
+    vector<string> seq_area;
+
+    ofstream myfile("tmp_seqfile2");
+    if(myfile.is_open()){
+      int i;
+      char del = '\t';
+      for(i=0; i<vIn.size(); i++){
+        string oneTarget = vIn[i];
+	vector<string> vSplit = split(oneTarget, del);
+	//Extract area around sequence
+	int arg3 = stoi(vSplit[5]) + stoi(vSplit[6]);
+	int arg4 = stoi(vSplit[4]) + stoi(vSplit[6]);
+	seq_area = extract_sequence(vSplit[2],vSplit[3],arg3,arg4,vSplit[1]);
+      }
+      myfile.close();
+    }
+    else cout << "Could not open temporary sequence file.\n";
+
+
+    return vOut;
+}
+//.............................................................................
+vector<string> extract_sequence(int start, int end, int us, string ds, string sequence){
+    int us_start = (start > us ? start - us : 1);
+    int ds_end   = ((end + ds)< sequence.length() ? end + ds : sequence.length());
+    int actual_start = start - us_start + 1;
+    string string1 =  
+}
+//.............................................................................
 vector<string> getdGduplexes(vector<string> vIn){
     vector<string> vOut;
 
@@ -145,10 +183,10 @@ vector<string> getdGduplexes(vector<string> vIn){
       char del = '\t';
       for(i=0; i<insize; i++){
         string oneTarget = vIn[i];
-	vector vSplit = split(oneTarget, del);
+	vector<string> vSplit = split(oneTarget, del);
 	int j;
 	for(j=0; j<vSpilt.size(); j++){
-	   myfile << vSlit[j] << "\n";
+	   myfile << vSplit[j] << "\n";
 	}
       }
       myfile.close();
