@@ -13,20 +13,23 @@
 
 using namespace std;
 
+#define RNAHYBRID_EXE_DIR "Bin/RNAHybrid/RNAhybrid-2.1/src"
+#define RNAddG_EXE_DIR    "Bin/ViennaRNA/ViennaRNA-1.6/Progs/"
+
 //#############################################################################
 vector<string> extract_sequence(int start, int end, int us, int ds, string sequence);
 vector<string> getddG(vector<string> vIn);
 vector<string> getdGduplexes(vector<string> vIn);
 vector<string> split(const string &s, char delim);
-void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut);
+void join_and_push(vector<string> vIn, char delimit, vector<string> &vOut);
 void loadArg(int argc, const char **argv, const char *flag, int *var);
 void printHelp();
 
 
 //##############################################################################
 int main(int argc, char **argv){
-  const char *RNAHYBRID_EXE_DIR = "Bin/RNAHybrid/RNAhybrid-2.1/src";
-  const char *$RNAddG_EXE_DIR 	= "Bin/ViennaRNA/ViennaRNA-1.6/Progs/";
+//  const char *RNAHYBRID_EXE_DIR = "Bin/RNAHybrid/RNAhybrid-2.1/src";
+//  const char *RNAddG_EXE_DIR 	= "Bin/ViennaRNA/ViennaRNA-1.6/Progs/";
 
   if(checkCmdLineFlag(argc, (const char**)argv, "help")){
 	printHelp();
@@ -100,7 +103,7 @@ int main(int argc, char **argv){
       string target = utr.substr(startpos -1, maxtargetLen);
       int real_start = max(endpos - DDG_OPEN +1,1);
 
-      string del = "\t";
+      char del = '\t';
 
       //push(@headerInputArray,join ("\t", splice(@row, 0, 8))); si traduce in:
       //splice:
@@ -194,17 +197,15 @@ vector<string> getddG(vector<string> vIn){
 
     int target_len = stoi(bindEnd) - stoi(bindStart) + 1 + stoi(downstream_rest);
 
-    auto cmd = RNAddG_EXE_DIR + "/RNAddG4 -u " + upstream_rest + " -s " + bindEnd + " -f " + target_len.str() + " -t " + target_len.str() + " < tmp_seqfile2";
+    std::stringstream cmd;
+    cmd << " " << RNAddG_EXE_DIR << "/RNAddG4 -u " << upstream_rest << " -s " << bindEnd << " -f " << to_string(target_len) << " -t " << to_string(target_len) << " < tmp_seqfile2";
 
     int ii;
-    cout <<  "Calling RNAddG with "
-    for(ii=0; ii<vIn.size(); i++)
-       cout << vIn[ii] << " ";
-    cout << "targets... \n";
+    cout <<  "Calling RNAddG with " << vIn.size() << "targets... \n";
 
     //my @resArray = split (/\n/, `$cmd`);
-    auto command_line = cmd + " > tmp_output_cmdLine1.txt";
-    system(command_line);
+    cmd << " > tmp_output_cmdLine1.txt";
+    system(cmd.str().c_str());
     ifstream file("tmp_output_cmdLine1.txt");
     string str;
     string result_of_cmd;
@@ -214,12 +215,11 @@ vector<string> getddG(vector<string> vIn){
     }				          
     vector<string> resArray = split(result_of_cmd, '\n');
 
-
-    for(ii=0; ii<outsize; ii++){
+    for(ii=0; ii<resArray.size(); ii++){
       string resline = resArray[ii];
       vector<string> ddG_values = split(resline, '\n');
       vector<string> small = {ddG_values[6],ddG_values[3],ddG_values[4]};
-      join_and_push(small, "\t", vOut);
+      join_and_push(small, '\t', vOut);
     }
 
     return vOut;
@@ -231,24 +231,24 @@ vector<string> extract_sequence(int start, int end, int us, int ds, string seque
     int actual_start = start - us_start + 1;
     string string1 = sequence.substr(us_start -1, (ds_end - us_start) + 1);
     int actual_end = actual_start + abs(end - start);
-    vector<string> result = {actual_start.str(), actual_end.str(), string1};
+    vector<string> result = {to_string(actual_start), to_string(actual_end), string1};
 
     return result;
 }
 //.............................................................................
 vector<string> getdGduplexes(vector<string> vIn){
     vector<string> vOut;
+    int insize = vIn.size();
 
     ofstream myfile("tmp_seqfile1");
     if(myfile.is_open()){
-      int insize = vIn.size();
       int i;
       char del = '\t';
       for(i=0; i<insize; i++){
         string oneTarget = vIn[i];
 	vector<string> vSplit = split(oneTarget, del);
 	int j;
-	for(j=0; j<vSpilt.size(); j++){
+	for(j=0; j<vSplit.size(); j++){
 	   myfile << vSplit[j] << "\n";
 	}
       }
@@ -258,15 +258,14 @@ vector<string> getdGduplexes(vector<string> vIn){
 
     //Call RNAduplex and extract result dGs and length
     int ii;
-    auto cmd = RNAddG_EXE_DIR + "/RNAduplex -5 0 < tmp_seqfile1";
-    cout << "Calling RNAduplex with ";
-    for(ii=0; ii<insize; i++)
-       cout << vIn[ii] << " ";
-    cout << "targets... ";
+    std::stringstream cmd;
+    cmd << " " <<  RNAddG_EXE_DIR << "/RNAduplex -5 0 < tmp_seqfile1";
+
+    cout << "Calling RNAduplex with " << insize << "targets... ";
 
     //my $result_of_cmd = `$cmd`;
-    auto command_line = cmd + " > tmp_output_cmdLine.txt";
-    system(command_line);
+    cmd << " > tmp_output_cmdLine.txt";
+    system(cmd.str().c_str());
     
     ifstream file("tmp_output_cmdLine.txt");
     string str;
@@ -287,16 +286,16 @@ vector<string> getdGduplexes(vector<string> vIn){
        string resline = resArray[ii];
        vector<string> items  = split(resline, '\t');
        vector<string> small = {items[6], items[7], items[8], items[9]};
-       join_and_push(small, "\t", vOut);
+       join_and_push(small, '\t', vOut);
     }
 
     return vOut;
 }
 //.............................................................................
-void join_and_push(vector<string> vIn, string delimit, vector<string> &vOut){
+void join_and_push(vector<string> vIn, char delimit, vector<string> &vOut){
     ostringstream oss;
     //Convert all but the last element to avoid a trailing "delimit"
-    copy(vIn.begin(), vIn.end()-1, ostream_iterator<string>(oss, delimit));
+    copy(vIn.begin(), vIn.end()-1, ostream_iterator<string>(oss, (char *)delimit));
     oss<< vIn.back(); //Now add the last element with no delimiter
     string vec2string = oss.str();
     //push:
