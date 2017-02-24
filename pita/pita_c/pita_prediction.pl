@@ -52,35 +52,35 @@ my $runcmd = "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/pita_run.pl -utr $
 	(length($loop) > 0 ? " -loop \"$loop\"" : "") .
 	(length($mismatches) > 0 ? " -m \"$mismatches\"" : "");
 
-#print STDERR "Running: $runcmd\n";
+print STDERR "\n\n>>>>>>>>>>> Running: $runcmd\n\n\n\n";
 
 system ($runcmd);
 
 
-system "rm ${prefix}_ext_utr.stab; mv ${prefix}_pita_results.tab tmp_${pid}; head -n 1 tmp_${pid} | cut -f 1-5,8,10- > ${prefix}_pita_results.tab; cat tmp_${pid} | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/body.pl 2 -1 | tr -d '\r' | cut -f 1-8,10- | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/merge_columns.pl -1 4 -2 5 -d ':' | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/merge_columns.pl -1 4 -2 5 -d ':' | sed 's/Seed:Mismatchs:G:U/Seed/g' | sort -k 13n >> ${prefix}_pita_results.tab; rm tmp_${pid};";
+#system "rm ${prefix}_ext_utr.stab; mv ${prefix}_pita_results.tab tmp_${pid}; head -n 1 tmp_${pid} | cut -f 1-5,8,10- > ${prefix}_pita_results.tab; cat tmp_${pid} | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/body.pl 2 -1 | tr -d '\r' | cut -f 1-8,10- | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/merge_columns.pl -1 4 -2 5 -d ':' | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/merge_columns.pl -1 4 -2 5 -d ':' | sed 's/Seed:Mismatchs:G:U/Seed/g' | sort -k 13n >> ${prefix}_pita_results.tab; rm tmp_${pid};";
 
-system "cat ${prefix}_pita_results.tab | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/body.pl 2 -1 | cut -f 1,2,13 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2 -m '\"-1\"' | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/average_rows.pl -k 0,1 -losoe -n | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 2,3,1,4 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 3 -m '\"-1\"' | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 3 -p 2 | sort -k 4n | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cap.pl \"RefSeq,microRNA,Sites,Score\" > ${prefix}_pita_results_targets.tab";
+#system "cat ${prefix}_pita_results.tab | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/body.pl 2 -1 | cut -f 1,2,13 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2 -m '\"-1\"' | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/average_rows.pl -k 0,1 -losoe -n | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 2,3,1,4 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 3 -m '\"-1\"' | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 3 -p 2 | sort -k 4n | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cap.pl \"RefSeq,microRNA,Sites,Score\" > ${prefix}_pita_results_targets.tab";
 
 print STDERR "Done.\n";
 
-if ($gxp == 1)
-{
-   print STDERR "Creating gxp file...\n";
+#if ($gxp == 1)
+#{
+#   print STDERR "Creating gxp file...\n";
    
-   open (GXP_FILE, ">${prefix}_pita_results.gxp");
-   print GXP_FILE $gxp_header;
-   close GXP_FILE;
+ #  open (GXP_FILE, ">${prefix}_pita_results.gxp");
+ #  print GXP_FILE $gxp_header;
+  # close GXP_FILE;
 
-   system "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/fasta2stab.pl $utr_fn | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/stab2length.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/lin.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 0 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 2,1,4,3 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 0 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 1 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/tab2feature_gxt.pl -n 'UTR Sequences' >> ${prefix}_pita_results.gxp";
-   system "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/body.pl 2 -1 ${prefix}_pita_results.tab | tr -d '\r' | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-4,2,14 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/uniquify.pl -c 1 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/tab2feature_gxt.pl -n 'PITA Predictions' -c '0,0,255,1'  -lh 50 -l 'Filled box' -minc '0' -maxc '25' >> ${prefix}_pita_results.gxp";
+  # system "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/fasta2stab.pl $utr_fn | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/stab2length.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/lin.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 0 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 2,1,4,3 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 0 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 1 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/tab2feature_gxt.pl -n 'UTR Sequences' >> ${prefix}_pita_results.gxp";
+   #system "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/body.pl 2 -1 ${prefix}_pita_results.tab | tr -d '\r' | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-4,2,14 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/uniquify.pl -c 1 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/tab2feature_gxt.pl -n 'PITA Predictions' -c '0,0,255,1'  -lh 50 -l 'Filled box' -minc '0' -maxc '25' >> ${prefix}_pita_results.gxp";
 
 
-   open (GXP_FILE, ">>${prefix}_pita_results.gxp");
-   print GXP_FILE "<GeneXPressTable Type=\"ChromosomeTrack\" Name=\"UTR Sequences Track\" TrackNames=\"UTR Sequences\">\n</GeneXPressTable>\n<GeneXPressTable Type=\"ChromosomeTrack\" Name=\"PITA Predictions Track\" TrackNames=\"PITA Predictions\">\n</GeneXPressTable>\n<TableDisplay TableDataModel=\"PITA Predictions Track\">\n</TableDisplay>\n<TableDisplay TableDataModel=\"UTR Sequences Track\">\n</TableDisplay>\n<GeneXPressClusterLists>\n</GeneXPressClusterLists>\n</GeneXPress>\n";
-   close GXP_FILE;
+  # open (GXP_FILE, ">>${prefix}_pita_results.gxp");
+  # print GXP_FILE "<GeneXPressTable Type=\"ChromosomeTrack\" Name=\"UTR Sequences Track\" TrackNames=\"UTR Sequences\">\n</GeneXPressTable>\n<GeneXPressTable Type=\"ChromosomeTrack\" Name=\"PITA Predictions Track\" TrackNames=\"PITA Predictions\">\n</GeneXPressTable>\n<TableDisplay TableDataModel=\"PITA Predictions Track\">\n</TableDisplay>\n<TableDisplay TableDataModel=\"UTR Sequences Track\">\n</TableDisplay>\n<GeneXPressClusterLists>\n</GeneXPressClusterLists>\n</GeneXPress>\n";
+   #close GXP_FILE;
 
-   print STDERR "Done.\n";
-}
+   #print STDERR "Done.\n";
+#}
 
 sub removeIllegalXMLChars
 {

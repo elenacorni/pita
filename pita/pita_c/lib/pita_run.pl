@@ -119,28 +119,38 @@ if (length($limit) > 0 and $n_potential_targets > $limit)
 }
 
 ## Step 2: Compute site scores
-
+my $file_outputTXT = "file_di_output_dai_comandi_precedenti";
 print STDERR "Computing site scores...\n";
 dsystem ("cat tmp_pt_$r " .
 		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/join.pl -1 2 - $ext_utr_fn " .
 		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-9,11- " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -a $CDS_FLANK " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/RNAddG_compute.pl -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -s $CDS_FLANK " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14 -m '\"-1\"' " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-15,14 " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 15 -sc 14 " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-12,14-16,13 " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14,15 -p 2 -m '\"-1\"' " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cap.pl \"UTR,microRNA,Start,End,Seed,Mismatchs,G:U,Loop,Site size,dGduplex,dG5,dG3,dG0,dG1,dGopen,ddG\" " .
-		 "> " . $output_dir . $prefix . "pita_results.tab");
+
+# perl
+"| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -a $CDS_FLANK " .
+"| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/RNAddG_compute.pl -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN ");
+
+# c++
+#		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -a $CDS_FLANK " .
+#                 "> " . $file_outputTXT );
+#dsystem ("/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/XXXX  $file_outputTXT  -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN ");
+
+print STDERR "####################### FINO A QUI ######################################\n\n\n\n";
+
+#		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -s $CDS_FLANK " .
+#		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14 -m '\"-1\"' " .
+#		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-15,14 " .
+#		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 15 -sc 14 " .
+#		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-12,14-16,13 " .
+#		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14,15 -p 2 -m '\"-1\"' " .
+#		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cap.pl \"UTR,microRNA,Start,End,Seed,Mismatchs,G:U,Loop,Site size,dGduplex,dG5,dG3,dG0,dG1,dGopen,ddG\" " .
+#		 "> " . $output_dir . $prefix . "pita_results.tab");
 
 
 ## Clean up
-if (not ($debug))
-{
-	dsystem ("/bin/rm -rf tmp_prefix_$r tmp_ext_utr_$r tmp_ext_utr_pos_$r tmp_prefix_$r tmp_pt_$r tmp_utr_stab_$r tmp_mir_stab_$r tmp_upstream_stab_$r");
-}
+#if (not ($debug))
+#{
+#	dsystem ("/bin/rm -rf tmp_prefix_$r tmp_ext_utr_$r tmp_ext_utr_pos_$r tmp_prefix_$r tmp_pt_$r tmp_utr_stab_$r tmp_mir_stab_$r tmp_upstream_stab_$r");
+#}
 
 exit (0);
 

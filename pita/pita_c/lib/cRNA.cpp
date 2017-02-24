@@ -1,6 +1,8 @@
+
 /* ******************************************** *
  *  TRADUZIONE DELLO SCRIPT: RNAddG_compute.pl  *
  * ******************************************** */
+
 #include <stdio.h>
 #include <assert.h>
 #include <libgen.h>
@@ -27,29 +29,23 @@ vector<string> split(const string &s, char delim);
 void join_and_push(vector<string> vIn, char delimit, vector<string> &vOut);
 void loadArg(int argc, const char **argv, const char *flag, int& var);
 void printHelp();
+string GetStdoutFromCommand(string cmd);
 
 
 //##############################################################################
 int main(int argc, char **argv){
-
-  cout << "\n###################################################################\n";
-  cout << "\n##				cRNA.cpp			      ##\n";
-  cout << "\n###################################################################\n";
-//  const char *RNAHYBRID_EXE_DIR = "Bin/RNAHybrid/RNAhybrid-2.1/src";
-//  const char *RNAddG_EXE_DIR 	= "Bin/ViennaRNA/ViennaRNA-1.6/Progs/";
-
   if(checkCmdLineFlag(argc, (const char**)argv, "help")){
 	printHelp();
   	return 0;
   }
-
+/*  
   string file_ref;
   string file = argv[1];
   ifstream fl(file);
   if(!fl.is_open()){
 	cout << "Could not open file " << file << "\n";
   }
-   
+*/  
   //Define variable and set default
   int ddG_area        = 70;
   int FULL_TL         = 50;
@@ -75,92 +71,127 @@ int main(int argc, char **argv){
   //Step over all Locations
   int done       = 0;
   int bunch_size = 1000;
-  
-  while(!done){
-    vector<string> dGduplexesInputArray;
-    vector<string> ddGInputArray;
-    vector<string> headerInputArray;
-    string record;
-    
-    int nlines;
-    for(nlines=0; nlines<bunch_size; nlines++){
-      if(!(fl >> record)){
+
+  //cout << "# 5\n";
+//int contatore = 0;
+//  while(!done){
+//cout << "#* n.giro nel while: " << contatore << "\n";
+//
+  vector<string> dGduplexesInputArray;
+  vector<string> ddGInputArray;
+  vector<string> headerInputArray;
+//  string record;
+  cout << "#* a\n";
+
+//string file_ref;
+string file = argv[1];
+cout << "file: " << file << "\n";
+
+ifstream fl(file);
+
+/*
+if(fl)
+cout << "IL FILE ESISTE E RIESCO AD APRIRLO\n\n";
+else 
+cout << "NON ESISTE!!!!!! o NON RIESCO AD APRIRLO!!\n\n\n";
+*/
+
+string record;
+//if(!fl.is_open()){
+  //  cout << "Could not open file " << file << "\n";
+//}
+//else
+// cout << "il file è aperto!!!\n\n";
+
+//    int nlines;
+//    for(nlines=0; nlines<bunch_size; nlines++){
+cout << "---------------------------------inizio WHILE-------------------------------------\n";
+    // trasformo il for in un while..
+  while(getline(fl, record)){
+
+cout << "\n\n >> RIGA...\n";
+  cout << record << "\n\n";
+/*      if(!(fl >> record)){
 	done = 1;
 	break;
-      }
-	
+      }*/
+cout << "#*  > 1\n";	
       //chomp function:
       vector<string> row = split(record, '\t');
-
+cout << "#*  > 2\n";
       int endpos = stoi(row[2]);
       string miRNA  = row[8];
       string utr    = row[11];
       string force_binding_i = "";
       string force_binding_j = "";
-
+cout << "#*  > 3\n";
       if(!no_force){
 	force_binding_i = row[9];
 	force_binding_i = row[10];
       }
-
+cout << "#*  > 4\n";
       //Calculate begining of target but make sure we're still in the UTR
       int startpos = max(endpos - FULL_TL + 1,1);
-      
+      cout << "#*  > 5\n";
       int maxtargetLen = endpos - startpos +1;
       string target = utr.substr(startpos -1, maxtargetLen);
       int real_start = max(endpos - DDG_OPEN +1,1);
-
+cout << "#*  > 6\n";
       char del = '\t';
-
-      //push(@headerInputArray,join ("\t", splice(@row, 0, 8))); si traduce in:
+     //push(@headerInputArray,join ("\t", splice(@row, 0, 8))); si traduce in:
       //splice:
       vector<string> el_elim;
       auto it = next(row.begin(), 8);
       move(row.begin(), it, back_inserter(el_elim));
       join_and_push(el_elim, del, headerInputArray); 
+cout << "#*  > 7\n";
 
-      /*
+
       //join:
-      ostringstream oss;
+  //    ostringstream oss;
       //Convert all but the last element to avoid a trailing "\t"
-      copy(el_elim.begin(), el_elim.end()-1, ostream_iterator<string>(oss, "\t"));
-      oss << el_elim.back(); //Now add the last element with no delimiter
-      string vec2string = oss.str();
+    //  copy(el_elim.begin(), el_elim.end()-1, ostream_iterator<string>(oss, "\t"));
+     // oss << el_elim.back(); //Now add the last element with no delimiter
+     // string vec2string = oss.str();
       //push:
-      headerInputArray.push_back(vec2string);
-      */
+    //  headerInputArray.push_back(vec2string);
 
-      //push(@dGduplexesInputArray, join ("\t", $miRNA, $target, $force_binding_i, $force_binding_j));    
+/* >>>>>>>>>>>>> SBAGLIATO: il problema è che force_binding_j è smepre zero!! <<<<<<<<<<<<<<<<<<<<<  */
+      //push(@dGduplexesInputArray, join ("\t", $miRNA, $target, $force_binding_i, $force_binding_j));   
+      cout << "#***  miRNA:  " << miRNA  << "  - target:  " <<  target << " - force_binding_i:  " << force_binding_i << " -  force_binding_j:  " << force_binding_j << "\n";
       vector<string> vectTmp = {miRNA, target, force_binding_i, force_binding_j};
       join_and_push(vectTmp, del, dGduplexesInputArray);
-
+cout << "#*  > 8\n";
       //push(@ddGInputArray, join ("\t", $miRNA, $utr, $real_start, $endpos, $upstream_rest, $downstream_rest, $ddG_area));
       vector<string> vectTmp1 = {miRNA, utr, to_string(real_start), to_string(endpos), to_string(upstream_rest), to_string(downstream_rest), to_string(ddG_area)};
       join_and_push(vectTmp1, del, ddGInputArray);
-    }//fine for nlines
-    
-    int arraySize = headerInputArray.size();
-    cout << "\nComputing " << arraySize << "results: ";
+cout << "#*  > 9 (in fondo al while)\n";
+    }//fine while read_rows
+cout << "---------------------------------fine WHILE-------------------------------------\n";
 
-    vector<string> dGduplexesOutputArray = getdGduplexes(dGduplexesInputArray);
-    vector<string> ddGOutputArray        = getddG(ddGInputArray, downstream_rest);
+  int arraySize = headerInputArray.size();
+  cout << "\nComputing " << arraySize << " results: ";
 
-    int i;
-    char del = '\t';
-    for(i=0; i<arraySize; i++){
+  vector<string> dGduplexesOutputArray = getdGduplexes(dGduplexesInputArray);
+  vector<string> ddGOutputArray        = getddG(ddGInputArray, downstream_rest);
+cout << "#* b\n";
+  int i;
+  char del = '\t';
+  for(i=0; i<arraySize; i++){
       vector<string> v1 = split(dGduplexesOutputArray[i], del);
       vector<string> v2 = split(ddGOutputArray[i], del);
-
+cout << "#* c\n";
       //$ddGall = $dGall + ($dG1 - $dG0);
       v2[0] = to_string( (stoi(v1[1]) + (stoi(v2[2]) - stoi(v2[1]))) );
-
+cout << "#* d\n";
       int ddG_v4 = 0;
       int dG3max = 0;
       int dG3ratio = 0;
-
+cout << "#* e (in fondo al while)\n";
       cout << headerInputArray[i] << "\t" << v1[0] << "\t" <<  v1[1] <<  "\t" <<  v1[2] << "\t" <<  v1[3] <<  "\t" << v2[0] << "\t"  <<  v2[1] <<  "\t" <<  v2[2] <<  "\t" <<  ddG_v4 <<  "\t" <<  dG3max <<  "\t" <<  dG3ratio << "\n";
-    }
-  }//fine while
+  }
+//contatore ++;
+//  }//fine while
   cout << " Done.\n";
   cout << "\n###################################################################\n";
   cout << "\n##                       FINE cRNA.cpp                              ##\n";
@@ -211,10 +242,11 @@ vector<string> getddG(vector<string> vIn, int downstream_rest){
     cmd << " " << RNAddG_EXE_DIR << "/RNAddG4 -u " << upstream_rest << " -s " << bindEnd << " -f " << to_string(target_len) << " -t " << to_string(target_len) << " < tmp_seqfile2";
 
     int ii;
-    cout <<  "Calling RNAddG with " << vIn.size() << "targets... \n";
+    cout <<  "Calling RNAddG with " << vIn.size() << " targets... \n";
 
     //my @resArray = split (/\n/, `$cmd`);
-    cmd << " > tmp_output_cmdLine1.txt";
+ 
+ /*   cmd << " > tmp_output_cmdLine1.txt";
     system(cmd.str().c_str());
     ifstream file("tmp_output_cmdLine1.txt");
     string str;
@@ -222,7 +254,9 @@ vector<string> getddG(vector<string> vIn, int downstream_rest){
     while(getline(file, str)){
       result_of_cmd += str;
       result_of_cmd.push_back('\n');
-    }				          
+    }
+    */
+    string result_of_cmd = GetStdoutFromCommand(cmd.str());
     vector<string> resArray = split(result_of_cmd, '\n');
 
     for(ii=0; ii<resArray.size(); ii++){
@@ -249,7 +283,12 @@ vector<string> extract_sequence(int start, int end, int us, int ds, string seque
 vector<string> getdGduplexes(vector<string> vIn){
     vector<string> vOut;
     int insize = vIn.size();
-
+/*
+    int j;
+    for(j=0; j<vIn.size(); j++){
+       cout << "#_.-> vIn[" << j << "] = " << vIn[j] << "\n";
+    }
+*/
     ofstream myfile("tmp_seqfile1");
     if(myfile.is_open()){
       int i;
@@ -269,22 +308,25 @@ vector<string> getdGduplexes(vector<string> vIn){
     //Call RNAduplex and extract result dGs and length
     int ii;
     std::stringstream cmd;
+ //   cmd << " " <<  RNAddG_EXE_DIR << "RNAduplex -5 0 < tmp_seqfile1  | > tmp_output_cmdLine.txt";
+ 
     cmd << " " <<  RNAddG_EXE_DIR << "/RNAduplex -5 0 < tmp_seqfile1";
 
-    cout << "Calling RNAduplex with " << insize << "targets... ";
+    cout << "Calling RNAduplex with " << insize << " targets... ";
 
     //my $result_of_cmd = `$cmd`;
-    cmd << " > tmp_output_cmdLine.txt";
-    system(cmd.str().c_str());
+ //  cmd << " | > tmp_output_cmdLine.txt";
+ //   system(cmd.str().c_str());
     
-    ifstream file("tmp_output_cmdLine.txt");
+/*    ifstream file("tmp_output_cmdLine.txt");
     string str;
     string result_of_cmd;
     while(getline(file, str)){
        result_of_cmd += str;
        result_of_cmd.push_back('\n');
     }
-
+*/
+    string result_of_cmd = GetStdoutFromCommand(cmd.str());
     vector<string> resArray = split(result_of_cmd, '\n');
 
     int outsize = resArray.size();
@@ -328,6 +370,24 @@ void loadArg(int argc, const char **argv, const char *flag, int &var){
   if(checkCmdLineFlag(argc, argv, flag)){
     var = getCmdLineArgumentInt(argc, argv, flag);
   }
+}
+//............................................................................
+string GetStdoutFromCommand(string cmd) {
+  string data;
+  FILE * stream;
+  const int max_buffer = 256;
+  char buffer[max_buffer];
+  cmd.append(" 2>&1");
+ 
+  stream = popen(cmd.c_str(), "r");
+  if (stream) {
+    while (!feof(stream))
+    if(fgets(buffer, max_buffer, stream) != NULL)
+       data.append(buffer);
+    pclose(stream);
+  }
+
+  return data;
 }
 //.............................................................................
 void printHelp(){
