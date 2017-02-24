@@ -18,7 +18,7 @@ using namespace std;
 
 //#############################################################################
 vector<string> extract_sequence(int start, int end, int us, int ds, string sequence);
-vector<string> getddG(vector<string> vIn);
+vector<string> getddG(vector<string> vIn, int downstream_rest);
 vector<string> getdGduplexes(vector<string> vIn);
 vector<string> split(const string &s, char delim);
 void join_and_push(vector<string> vIn, char delimit, vector<string> &vOut);
@@ -28,6 +28,10 @@ void printHelp();
 
 //##############################################################################
 int main(int argc, char **argv){
+
+  cout << "\n###################################################################\n";
+  cout << "\n##				cRNA.cpp			      ##\n";
+  cout << "\n###################################################################\n";
 //  const char *RNAHYBRID_EXE_DIR = "Bin/RNAHybrid/RNAhybrid-2.1/src";
 //  const char *RNAddG_EXE_DIR 	= "Bin/ViennaRNA/ViennaRNA-1.6/Progs/";
 
@@ -136,7 +140,7 @@ int main(int argc, char **argv){
     cout << "\nComputing " << arraySize << "results: ";
 
     vector<string> dGduplexesOutputArray = getdGduplexes(dGduplexesInputArray);
-    vector<string> ddGOutputArray        = getddG(ddGInputArray);
+    vector<string> ddGOutputArray        = getddG(ddGInputArray, downstream_rest);
 
     int i;
     char del = '\t';
@@ -155,11 +159,14 @@ int main(int argc, char **argv){
     }
   }//fine while
   cout << " Done.\n";
+  cout << "\n###################################################################\n";
+  cout << "\n##                       FINE cRNA.cpp                              ##\n";
+  cout << "\n###################################################################\n";
   return 0;
 }
 
 //#############################################################################
-vector<string> getddG(vector<string> vIn){
+vector<string> getddG(vector<string> vIn, int downstream_rest){
     vector<string> vOut;
     string upstream_rest;
     vector<string> seq_area;
@@ -195,7 +202,7 @@ vector<string> getddG(vector<string> vIn){
     string bindStart = seq_area[0];
     string bindEnd   = seq_area[1];
 
-    int target_len = stoi(bindEnd) - stoi(bindStart) + 1 + stoi(downstream_rest);
+    int target_len = stoi(bindEnd) - stoi(bindStart) + 1 + downstream_rest;
 
     std::stringstream cmd;
     cmd << " " << RNAddG_EXE_DIR << "/RNAddG4 -u " << upstream_rest << " -s " << bindEnd << " -f " << to_string(target_len) << " -t " << to_string(target_len) << " < tmp_seqfile2";
@@ -294,8 +301,10 @@ vector<string> getdGduplexes(vector<string> vIn){
 //.............................................................................
 void join_and_push(vector<string> vIn, char delimit, vector<string> &vOut){
     ostringstream oss;
+    string d ;
+    d += delimit;
     //Convert all but the last element to avoid a trailing "delimit"
-    copy(vIn.begin(), vIn.end()-1, ostream_iterator<string>(oss, (char *)delimit));
+    copy(vIn.begin(), vIn.end()-1, ostream_iterator<string>(oss, d.c_str()));
     oss<< vIn.back(); //Now add the last element with no delimiter
     string vec2string = oss.str();
     //push:
