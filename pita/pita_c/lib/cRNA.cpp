@@ -31,21 +31,13 @@ void loadArg(int argc, const char **argv, const char *flag, int& var);
 void printHelp();
 string GetStdoutFromCommand(string cmd);
 
-
 //##############################################################################
 int main(int argc, char **argv){
   if(checkCmdLineFlag(argc, (const char**)argv, "help")){
 	printHelp();
   	return 0;
   }
-/*  
-  string file_ref;
-  string file = argv[1];
-  ifstream fl(file);
-  if(!fl.is_open()){
-	cout << "Could not open file " << file << "\n";
-  }
-*/  
+  
   //Define variable and set default
   int ddG_area        = 70;
   int FULL_TL         = 50;
@@ -72,100 +64,55 @@ int main(int argc, char **argv){
   int done       = 0;
   int bunch_size = 1000;
 
-  //cout << "# 5\n";
-//int contatore = 0;
-//  while(!done){
-//cout << "#* n.giro nel while: " << contatore << "\n";
-//
   vector<string> dGduplexesInputArray;
   vector<string> ddGInputArray;
   vector<string> headerInputArray;
-//  string record;
-  cout << "#* a\n";
+  
+  string file = argv[1];
 
-//string file_ref;
-string file = argv[1];
-cout << "file: " << file << "\n";
+  ifstream fl(file);
 
-ifstream fl(file);
+  string record;
 
-/*
-if(fl)
-cout << "IL FILE ESISTE E RIESCO AD APRIRLO\n\n";
-else 
-cout << "NON ESISTE!!!!!! o NON RIESCO AD APRIRLO!!\n\n\n";
-*/
-
-string record;
-//if(!fl.is_open()){
-  //  cout << "Could not open file " << file << "\n";
-//}
-//else
-// cout << "il file è aperto!!!\n\n";
-
-//    int nlines;
-//    for(nlines=0; nlines<bunch_size; nlines++){
 cout << "---------------------------------inizio WHILE-------------------------------------\n";
     // trasformo il for in un while..
   while(getline(fl, record)){
 
-cout << "\n\n >> RIGA...\n";
-  cout << record << "\n\n";
-/*      if(!(fl >> record)){
-	done = 1;
-	break;
-      }*/
-cout << "#*  > 1\n";	
       //chomp function:
       vector<string> row = split(record, '\t');
-cout << "#*  > 2\n";
+      
       int endpos = stoi(row[2]);
       string miRNA  = row[8];
       string utr    = row[11];
       string force_binding_i = "";
       string force_binding_j = "";
-cout << "#*  > 3\n";
+      
       if(!no_force){
 	force_binding_i = row[9];
-	force_binding_i = row[10];
+	force_binding_j = row[10];
       }
-cout << "#*  > 4\n";
-      //Calculate begining of target but make sure we're still in the UTR
+     
+     //Calculate begining of target but make sure we're still in the UTR
       int startpos = max(endpos - FULL_TL + 1,1);
-      cout << "#*  > 5\n";
       int maxtargetLen = endpos - startpos +1;
       string target = utr.substr(startpos -1, maxtargetLen);
       int real_start = max(endpos - DDG_OPEN +1,1);
-cout << "#*  > 6\n";
+    
       char del = '\t';
-     //push(@headerInputArray,join ("\t", splice(@row, 0, 8))); si traduce in:
+      //push(@headerInputArray,join ("\t", splice(@row, 0, 8))); si traduce in:
       //splice:
       vector<string> el_elim;
       auto it = next(row.begin(), 8);
       move(row.begin(), it, back_inserter(el_elim));
       join_and_push(el_elim, del, headerInputArray); 
-cout << "#*  > 7\n";
 
-
-      //join:
-  //    ostringstream oss;
-      //Convert all but the last element to avoid a trailing "\t"
-    //  copy(el_elim.begin(), el_elim.end()-1, ostream_iterator<string>(oss, "\t"));
-     // oss << el_elim.back(); //Now add the last element with no delimiter
-     // string vec2string = oss.str();
-      //push:
-    //  headerInputArray.push_back(vec2string);
-
-/* >>>>>>>>>>>>> SBAGLIATO: il problema è che force_binding_j è smepre zero!! <<<<<<<<<<<<<<<<<<<<<  */
       //push(@dGduplexesInputArray, join ("\t", $miRNA, $target, $force_binding_i, $force_binding_j));   
-      cout << "#***  miRNA:  " << miRNA  << "  - target:  " <<  target << " - force_binding_i:  " << force_binding_i << " -  force_binding_j:  " << force_binding_j << "\n";
       vector<string> vectTmp = {miRNA, target, force_binding_i, force_binding_j};
       join_and_push(vectTmp, del, dGduplexesInputArray);
-cout << "#*  > 8\n";
+      
       //push(@ddGInputArray, join ("\t", $miRNA, $utr, $real_start, $endpos, $upstream_rest, $downstream_rest, $ddG_area));
       vector<string> vectTmp1 = {miRNA, utr, to_string(real_start), to_string(endpos), to_string(upstream_rest), to_string(downstream_rest), to_string(ddG_area)};
       join_and_push(vectTmp1, del, ddGInputArray);
-cout << "#*  > 9 (in fondo al while)\n";
     }//fine while read_rows
 cout << "---------------------------------fine WHILE-------------------------------------\n";
 
@@ -283,12 +230,7 @@ vector<string> extract_sequence(int start, int end, int us, int ds, string seque
 vector<string> getdGduplexes(vector<string> vIn){
     vector<string> vOut;
     int insize = vIn.size();
-/*
-    int j;
-    for(j=0; j<vIn.size(); j++){
-       cout << "#_.-> vIn[" << j << "] = " << vIn[j] << "\n";
-    }
-*/
+    
     ofstream myfile("tmp_seqfile1");
     if(myfile.is_open()){
       int i;
@@ -308,24 +250,11 @@ vector<string> getdGduplexes(vector<string> vIn){
     //Call RNAduplex and extract result dGs and length
     int ii;
     std::stringstream cmd;
- //   cmd << " " <<  RNAddG_EXE_DIR << "RNAduplex -5 0 < tmp_seqfile1  | > tmp_output_cmdLine.txt";
- 
     cmd << " " <<  RNAddG_EXE_DIR << "/RNAduplex -5 0 < tmp_seqfile1";
 
     cout << "Calling RNAduplex with " << insize << " targets... ";
 
     //my $result_of_cmd = `$cmd`;
- //  cmd << " | > tmp_output_cmdLine.txt";
- //   system(cmd.str().c_str());
-    
-/*    ifstream file("tmp_output_cmdLine.txt");
-    string str;
-    string result_of_cmd;
-    while(getline(file, str)){
-       result_of_cmd += str;
-       result_of_cmd.push_back('\n');
-    }
-*/
     string result_of_cmd = GetStdoutFromCommand(cmd.str());
     vector<string> resArray = split(result_of_cmd, '\n');
 
@@ -333,7 +262,7 @@ vector<string> getdGduplexes(vector<string> vIn){
 
     if(insize != outsize)
        cout << "RNAduplex failure. Result was " << result_of_cmd << "\n";
-
+/* sono arrivata a controllare qui!*/
     for(ii=0; ii<outsize; ii++){
        string resline = resArray[ii];
        vector<string> items  = split(resline, '\t');
