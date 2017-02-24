@@ -13,8 +13,8 @@
 
 using namespace std;
 
-#define RNAHYBRID_EXE_DIR "Bin/RNAHybrid/RNAhybrid-2.1/src"
-#define RNAddG_EXE_DIR    "Bin/ViennaRNA/ViennaRNA-1.6/Progs/"
+char const* const RNAHYBRID_EXE_DIR = "Bin/RNAHybrid/RNAhybrid-2.1/src";
+char const* const RNAddG_EXE_DIR  = "Bin/ViennaRNA/ViennaRNA-1.6/Progs/";
 
 //#############################################################################
 vector<string> extract_sequence(int start, int end, int us, int ds, string sequence);
