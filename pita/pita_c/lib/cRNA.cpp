@@ -1,3 +1,6 @@
+/* ******************************************** *
+ *  TRADUZIONE DELLO SCRIPT: RNAddG_compute.pl  *
+ * ******************************************** */
 #include <stdio.h>
 #include <assert.h>
 #include <libgen.h>
