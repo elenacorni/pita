@@ -22,7 +22,7 @@ vector<string> getddG(vector<string> vIn);
 vector<string> getdGduplexes(vector<string> vIn);
 vector<string> split(const string &s, char delim);
 void join_and_push(vector<string> vIn, char delimit, vector<string> &vOut);
-void loadArg(int argc, const char **argv, const char *flag, int *var);
+void loadArg(int argc, const char **argv, const char *flag, int& var);
 void printHelp();
 
 
@@ -56,13 +56,13 @@ int main(int argc, char **argv){
   int no_force        = 0;
   
   //Load arg from command line..
-  loadArg(argc,(const char **)argv, "tl",              &FULL_TL);
-  loadArg(argc,(const char **)argv, "dgtl",            &DDG_OPEN);
-  loadArg(argc,(const char **)argv, "3max",            &include_3max);
-  loadArg(argc,(const char **)argv, "ddG_v4",          &include_ddG_v4);
-  loadArg(argc,(const char **)argv, "upstream_rest",   &upstream_rest);
-  loadArg(argc,(const char **)argv, "downstream_rest", &downstream_rest);
-  loadArg(argc,(const char **)argv, "noforce",         &no_force);
+  loadArg(argc,(const char **)argv, "tl",              FULL_TL);
+  loadArg(argc,(const char **)argv, "dgtl",            DDG_OPEN);
+  loadArg(argc,(const char **)argv, "3max",            include_3max);
+  loadArg(argc,(const char **)argv, "ddG_v4",          include_ddG_v4);
+  loadArg(argc,(const char **)argv, "upstream_rest",   upstream_rest);
+  loadArg(argc,(const char **)argv, "downstream_rest", downstream_rest);
+  loadArg(argc,(const char **)argv, "noforce",         no_force);
   getCmdLineArgumentString(argc,(const char **)argv, "components", &components);
   
   //Step over all Locations
@@ -312,7 +312,7 @@ vector<string> split(const string &s, char delim) {
     return elems;
 }
 //.............................................................................
-void loadArg(int argc, const char **argv, const char *flag, int *var){
+void loadArg(int argc, const char **argv, const char *flag, int &var){
   if(checkCmdLineFlag(argc, argv, flag)){
     var = getCmdLineArgumentInt(argc, argv, flag);
   }
