@@ -10,9 +10,7 @@ require "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/format_number.pl";
 my $RNAHYBRID_EXE_DIR = "/home/HPC/elena.corni/PITA_prog/pita/pita_c/Bin/RNAHybrid/RNAhybrid-2.1/src";
 my $RNAddG_EXE_DIR 		= "/home/HPC/elena.corni/PITA_prog/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Progs/";
 
- print STDERR "\n#######################################################\n";
- print STDERR "##			File RNA!!!		    ##\n";
- print STDERR "#######################################################\n";
+
 if ($ARGV[0] eq "--help")
 {
   print STDOUT <DATA>;
@@ -44,21 +42,18 @@ my $upstream_rest = get_arg("upstream_rest", 0, \%args);
 my $downstream_rest = get_arg("downstream_rest", 0, \%args);
 my $no_force = get_arg("noforce", 0, \%args);
 
-
-print STDERR "# downstream_rest: " . $downstream_rest . "\n";
-
 # Step over all Locations ###########################################################
 
 my $done = 0;
 my $bunch_size = 1000;
-my $ccontatore = 0;
+
 while (!$done)
 {
 	my @dGduplexesInputArray = ();
 	my @ddGInputArray        = ();
 	my @headerInputArray     = ();
 	my $record;
-
+	
 	for (my $nlines=0; $nlines < $bunch_size; $nlines++)
 	{
 		if (!($record = <$file_ref>))
@@ -66,7 +61,7 @@ while (!$done)
 			$done = 1;
 			last;
 		}
-	print STDERR "# it_w: " . $ccontatore  . " nlines: " . $nlines . " --> record\n" . $record  . "\n";
+	
 		chomp ($record);
 		my @row = split(/\t/, $record);
 		my $endpos = $row[2];
@@ -92,9 +87,6 @@ while (!$done)
 	
 		push (@headerInputArray,     join ("\t", splice(@row, 0, 8)));
 		push (@dGduplexesInputArray, join ("\t", $miRNA, $target, $force_binding_i, $force_binding_j));
-
-print STDERR "######## miRNA: $miRNA, target: $target, force_binding_i: $force_binding_i, force_binding_j: $force_binding_j\n";
-
 		push (@ddGInputArray,        join ("\t", $miRNA, $utr, $real_start, $endpos, $upstream_rest, $downstream_rest, $ddG_area));
 	}
 	
@@ -118,17 +110,9 @@ print STDERR "######## miRNA: $miRNA, target: $target, force_binding_i: $force_b
 	
 			print $headerInputArray[$i] . "\t$target_length\t$dGall\t$dG5\t$dG3\t$ddGall\t$dG0\t$dG1\t$ddG_v4\t$dG3max\t$dG3ratio\n";
 	}
-$ccontatore++;
 }
 
 print STDERR " Done.\n";
-
- print STDERR "\n#######################################################\n";
- print STDERR "##                     FINE File RNA!!!              ##\n";
- print STDERR "#######################################################\n\n";
-
-
-
 # system ("rm tmp_seqfile1 tmp_seqfile2");
 
 
@@ -138,7 +122,7 @@ sub getdGduplexes {
 
 	my @inArray = @_;
 	my @outArray = ();
-
+	
 	open (SEQFILE, ">tmp_seqfile1") or die ("Could not open temporary sequence file.\n");
 	
 	my $insize = @inArray;
@@ -155,12 +139,9 @@ sub getdGduplexes {
 	# Call RNAduplex and extract result dGs and length
 	
 	my $cmd = "$RNAddG_EXE_DIR/RNAduplex -5 0 < tmp_seqfile1";
-
 	print STDERR "Calling RNAduplex with " . @inArray . " targets... ";
 
 	my $result_of_cmd = `$cmd`;
-
-print STDERR "\n# @@@@@ output of $RNAddG_EXE_DIR/RNAduplex -5 0 < tmp_seqfile1 ...IS:\n" . $result_of_cmd . "\n\n";
 	
 	my @resArray = split (/\n/, $result_of_cmd);
 	
@@ -192,13 +173,9 @@ sub getddG {
 
 	open (SEQFILE, ">tmp_seqfile2") or die ("Could not open temporary sequence file.\n");
 	
-print STDERR "# **getddG - appena entrata** downstream_rest: " . $downstream_rest . "\n";
-
 	foreach my $oneTarget (@inArray)
 	{
 		(my $miRNA, my $utr, my $startpos, my $endpos, $upstream_rest, my $downstream_rest, my $ddG_area) = split (/\t/, $oneTarget);
-
-print STDERR "# **getddG - foreach def.nuova.var!** downstream_rest: " . $downstream_rest . "\n";
 
 		# Extract area around sequence
 		@seq_area = &extract_sequence ($startpos, $endpos, $downstream_rest + $ddG_area, $upstream_rest + $ddG_area, $utr);
@@ -217,12 +194,8 @@ print STDERR "# **getddG - foreach def.nuova.var!** downstream_rest: " . $downst
 	my $bindStart = $seq_area[0];
 	my $bindEnd   = $seq_area[1];
 
-print STDERR "# **getddG - uscita** downstream_rest: " . $downstream_rest . "\n";
-
 	my $target_len = $bindEnd - $bindStart + 1 + $downstream_rest;
 	
-print STDERR "# **getddG** target_len: " . $target_len . "\n";
-
 	my $cmd = "$RNAddG_EXE_DIR/RNAddG4 -u $upstream_rest -s $bindEnd -f $target_len -t $target_len < tmp_seqfile2";
 
 	print STDERR "Calling RNAddG with " . @inArray . " targets... ";

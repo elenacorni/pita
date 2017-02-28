@@ -37,7 +37,6 @@ int main(int argc, char **argv){
 	printHelp();
   	return 0;
   }
-  
   //Define variable and set default
   int ddG_area        = 70;
   int FULL_TL         = 50;
@@ -74,7 +73,6 @@ int main(int argc, char **argv){
 
   string record;
 
-cout << "---------------------------------inizio WHILE-------------------------------------\n";
     // trasformo il for in un while..
   while(getline(fl, record)){
 
@@ -114,35 +112,32 @@ cout << "---------------------------------inizio WHILE--------------------------
       vector<string> vectTmp1 = {miRNA, utr, to_string(real_start), to_string(endpos), to_string(upstream_rest), to_string(downstream_rest), to_string(ddG_area)};
       join_and_push(vectTmp1, del, ddGInputArray);
     }//fine while read_rows
-cout << "---------------------------------fine WHILE-------------------------------------\n";
 
   int arraySize = headerInputArray.size();
   cout << "\nComputing " << arraySize << " results: ";
 
   vector<string> dGduplexesOutputArray = getdGduplexes(dGduplexesInputArray);
   vector<string> ddGOutputArray        = getddG(ddGInputArray, downstream_rest);
-cout << "#* b\n";
+
   int i;
   char del = '\t';
+
   for(i=0; i<arraySize; i++){
       vector<string> v1 = split(dGduplexesOutputArray[i], del);
       vector<string> v2 = split(ddGOutputArray[i], del);
-cout << "#* c\n";
+
       //$ddGall = $dGall + ($dG1 - $dG0);
-      v2[0] = to_string( (stoi(v1[1]) + (stoi(v2[2]) - stoi(v2[1]))) );
-cout << "#* d\n";
+      v2[0] = to_string( (stod(v1[1]) + (stod(v2[2]) - stod(v2[1]))) );
+
       int ddG_v4 = 0;
       int dG3max = 0;
       int dG3ratio = 0;
-cout << "#* e (in fondo al while)\n";
+
       cout << headerInputArray[i] << "\t" << v1[0] << "\t" <<  v1[1] <<  "\t" <<  v1[2] << "\t" <<  v1[3] <<  "\t" << v2[0] << "\t"  <<  v2[1] <<  "\t" <<  v2[2] <<  "\t" <<  ddG_v4 <<  "\t" <<  dG3max <<  "\t" <<  dG3ratio << "\n";
   }
 //contatore ++;
 //  }//fine while
   cout << " Done.\n";
-  cout << "\n###################################################################\n";
-  cout << "\n##                       FINE cRNA.cpp                              ##\n";
-  cout << "\n###################################################################\n";
   return 0;
 }
 
@@ -169,16 +164,19 @@ vector<string> getddG(vector<string> vIn, int downstream_rest){
     }
     else cout << "Could not open temporary sequence file.\n";
 
-/*
-    if(upstream_res.compare("0") != 0){
-       //$upstream_rest =~ s/^0//; manca un *
-       // Because we're gonna call C with this argument and
-       // sscanf is problematic with leading zeros
-       while(upstream_res[0] == '0'){
-           upstream_res.erase(0,1);
+    if(upstream_rest.empty())
+       upstream_rest = "0";
+    else{
+      if(upstream_rest.compare("0") != 0){
+          //$upstream_rest =~ s/^0//; manca un *
+          // Because we're gonna call C with this argument and
+          // sscanf is problematic with leading zeros
+          while(upstream_rest[0] == '0'){
+              upstream_rest.erase(0,1);
+          }     
        }
     }
-*/
+
     string seq = seq_area[2];
     string bindStart = seq_area[0];
     string bindEnd   = seq_area[1];
@@ -192,23 +190,12 @@ vector<string> getddG(vector<string> vIn, int downstream_rest){
     cout <<  "Calling RNAddG with " << vIn.size() << " targets... \n";
 
     //my @resArray = split (/\n/, `$cmd`);
- 
- /*   cmd << " > tmp_output_cmdLine1.txt";
-    system(cmd.str().c_str());
-    ifstream file("tmp_output_cmdLine1.txt");
-    string str;
-    string result_of_cmd;
-    while(getline(file, str)){
-      result_of_cmd += str;
-      result_of_cmd.push_back('\n');
-    }
-    */
     string result_of_cmd = GetStdoutFromCommand(cmd.str());
     vector<string> resArray = split(result_of_cmd, '\n');
 
     for(ii=0; ii<resArray.size(); ii++){
       string resline = resArray[ii];
-      vector<string> ddG_values = split(resline, '\n');
+      vector<string> ddG_values = split(resline, '\t');
       vector<string> small = {ddG_values[6],ddG_values[3],ddG_values[4]};
       join_and_push(small, '\t', vOut);
     }
@@ -262,7 +249,7 @@ vector<string> getdGduplexes(vector<string> vIn){
 
     if(insize != outsize)
        cout << "RNAduplex failure. Result was " << result_of_cmd << "\n";
-/* sono arrivata a controllare qui!*/
+    
     for(ii=0; ii<outsize; ii++){
        string resline = resArray[ii];
        vector<string> items  = split(resline, '\t');

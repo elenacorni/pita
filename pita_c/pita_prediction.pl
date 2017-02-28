@@ -39,7 +39,7 @@ if (length($prefix) == 0)
 }
 
 my $pid = $$;
-my $gxp_header = "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n<GeneXPress>\n\n<TSCRawData>\nUID\tNAME\tGWEIGHT\tE1\nG2\tG2\t1\t1\n</TSCRawData>\n\n<GeneXPressAttributes>\n<Attributes Id=\"0\">\n<Attribute Name=\"g_module\" Id=\"0\" Value=\"1 2\">\n</Attribute>\n</Attributes>\n</GeneXPressAttributes>\n\n<GeneXPressObjects>\n<Objects Type=\"Genes\" URLPrefix=\"genome-www4.stanford.edu/cgi-bin/SGD/locus.pl?locus=\">\n<Gene Id=\"0\" ORF=\"G2\" Desc=\"G2\">\n<Attributes AttributesGroupId=\"0\" Type=\"Full\" Value=\"1\">\n</Attributes>\n</Gene>\n</Objects>\n<Objects Type=\"Experiments\">\n<Experiment Id=\"0\" name=\"E1\">\n</Experiment>\n</Objects>\n</GeneXPressObjects>\n<TSCHierarchyClusterData NumClusters=\"1\">\n<Root ClusterNum=\"0\" NumChildren=\"0\">\n</Root>\n</TSCHierarchyClusterData>\n";
+#my $gxp_header = "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n<GeneXPress>\n\n<TSCRawData>\nUID\tNAME\tGWEIGHT\tE1\nG2\tG2\t1\t1\n</TSCRawData>\n\n<GeneXPressAttributes>\n<Attributes Id=\"0\">\n<Attribute Name=\"g_module\" Id=\"0\" Value=\"1 2\">\n</Attribute>\n</Attributes>\n</GeneXPressAttributes>\n\n<GeneXPressObjects>\n<Objects Type=\"Genes\" URLPrefix=\"genome-www4.stanford.edu/cgi-bin/SGD/locus.pl?locus=\">\n<Gene Id=\"0\" ORF=\"G2\" Desc=\"G2\">\n<Attributes AttributesGroupId=\"0\" Type=\"Full\" Value=\"1\">\n</Attributes>\n</Gene>\n</Objects>\n<Objects Type=\"Experiments\">\n<Experiment Id=\"0\" name=\"E1\">\n</Experiment>\n</Objects>\n</GeneXPressObjects>\n<TSCHierarchyClusterData NumClusters=\"1\">\n<Root ClusterNum=\"0\" NumChildren=\"0\">\n</Root>\n</TSCHierarchyClusterData>\n";
 
 print STDERR "Calculating predictions...\n";
 
@@ -52,7 +52,7 @@ my $runcmd = "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/pita_run.pl -utr $
 	(length($loop) > 0 ? " -loop \"$loop\"" : "") .
 	(length($mismatches) > 0 ? " -m \"$mismatches\"" : "");
 
-print STDERR "\n\n>>>>>>>>>>> Running: $runcmd\n\n\n\n";
+#print STDERR "Running: $runcmd\n";
 
 system ($runcmd);
 
@@ -65,43 +65,43 @@ print STDERR "Done.\n";
 
 #if ($gxp == 1)
 #{
-#   print STDERR "Creating gxp file...\n";
+ #  print STDERR "Creating gxp file...\n";
    
- #  open (GXP_FILE, ">${prefix}_pita_results.gxp");
- #  print GXP_FILE $gxp_header;
+  # open (GXP_FILE, ">${prefix}_pita_results.gxp");
+   #print GXP_FILE $gxp_header;
   # close GXP_FILE;
 
-  # system "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/fasta2stab.pl $utr_fn | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/stab2length.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/lin.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 0 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 2,1,4,3 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 0 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 1 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/tab2feature_gxt.pl -n 'UTR Sequences' >> ${prefix}_pita_results.gxp";
+   #system "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/fasta2stab.pl $utr_fn | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/stab2length.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/lin.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 0 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 2,1,4,3 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 0 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s 1 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/tab2feature_gxt.pl -n 'UTR Sequences' >> ${prefix}_pita_results.gxp";
    #system "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/body.pl 2 -1 ${prefix}_pita_results.tab | tr -d '\r' | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-4,2,14 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/uniquify.pl -c 1 | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/tab2feature_gxt.pl -n 'PITA Predictions' -c '0,0,255,1'  -lh 50 -l 'Filled box' -minc '0' -maxc '25' >> ${prefix}_pita_results.gxp";
 
 
   # open (GXP_FILE, ">>${prefix}_pita_results.gxp");
-  # print GXP_FILE "<GeneXPressTable Type=\"ChromosomeTrack\" Name=\"UTR Sequences Track\" TrackNames=\"UTR Sequences\">\n</GeneXPressTable>\n<GeneXPressTable Type=\"ChromosomeTrack\" Name=\"PITA Predictions Track\" TrackNames=\"PITA Predictions\">\n</GeneXPressTable>\n<TableDisplay TableDataModel=\"PITA Predictions Track\">\n</TableDisplay>\n<TableDisplay TableDataModel=\"UTR Sequences Track\">\n</TableDisplay>\n<GeneXPressClusterLists>\n</GeneXPressClusterLists>\n</GeneXPress>\n";
-   #close GXP_FILE;
+   #print GXP_FILE "<GeneXPressTable Type=\"ChromosomeTrack\" Name=\"UTR Sequences Track\" TrackNames=\"UTR Sequences\">\n</GeneXPressTable>\n<GeneXPressTable Type=\"ChromosomeTrack\" Name=\"PITA Predictions Track\" TrackNames=\"PITA Predictions\">\n</GeneXPressTable>\n<TableDisplay TableDataModel=\"PITA Predictions Track\">\n</TableDisplay>\n<TableDisplay TableDataModel=\"UTR Sequences Track\">\n</TableDisplay>\n<GeneXPressClusterLists>\n</GeneXPressClusterLists>\n</GeneXPress>\n";
+  # close GXP_FILE;
 
    #print STDERR "Done.\n";
 #}
 
-sub removeIllegalXMLChars
-{
-   my $str = $_[0];
+#sub removeIllegalXMLChars
+#{
+ #  my $str = $_[0];
    
-   my $res_str = "";
-   for (my $i = 0; $i < length($str); $i++) {
-      my $char = substr($str, $i, 1);
-      if ((ord($char) >= 32 and ord($char) <= 126) or ord($char) == 10 or ord($char) == 9) {
-	 $res_str .= $char;
-	 }
-   }
+  # my $res_str = "";
+  # for (my $i = 0; $i < length($str); $i++) {
+   #   my $char = substr($str, $i, 1);
+    #  if ((ord($char) >= 32 and ord($char) <= 126) or ord($char) == 10 or ord($char) == 9) {
+#	 $res_str .= $char;
+#	 }
+ #  }
    
-   $res_str =~ s/\&/&amp;/g;
-   $res_str =~ s/\"/&quot;/g;
-   $res_str =~ s/\'/&apos;/g;
-   $res_str =~ s/\</&lt;/g;
-   $res_str =~ s/\>/&gt;/g;
+  # $res_str =~ s/\&/&amp;/g;
+  # $res_str =~ s/\"/&quot;/g;
+  # $res_str =~ s/\'/&apos;/g;
+  # $res_str =~ s/\</&lt;/g;
+  # $res_str =~ s/\>/&gt;/g;
    
-   return $res_str;
-}
+  # return $res_str;
+#}
 
 __DATA__
 syntax: pita_prediction.pl [OPTIONS]
