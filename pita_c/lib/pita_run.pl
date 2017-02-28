@@ -125,20 +125,20 @@ if (length($limit) > 0 and $n_potential_targets > $limit)
 my $file_outputTXT = "output4RNAddG_compute_CPP";
 print STDERR "Computing site scores...\n";
 dsystem ("cat tmp_pt_$r " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/join.pl -1 2 - $ext_utr_fn " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-9,11- " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -a $CDS_FLANK " .
+                 "| ${startPath}/lib/join.pl -1 2 - $ext_utr_fn " .
+                 "| ${startPath}/lib/cut.pl -f 1-9,11- " .
+                 "| ${startPath}/lib/modify_column.pl -c 2,3 -a $CDS_FLANK " .
                  "> " . $file_outputTXT );
 #cpp:
-dsystem ("/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/RNAddG_compute_CPP  $file_outputTXT  -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN " .
-#                "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/RNAddG_compute.pl -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -s $CDS_FLANK " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14 -m '\"-1\"' " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-15,14 " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 15 -sc 14 " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-12,14-16,13 " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14,15 -p 2 -m '\"-1\"' " .
-                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cap.pl \"UTR,microRNA,Start,End,Seed,Mismatchs,G:U,Loop,Site size,dGduplex,dG5,dG3,dG0,dG1,dGopen,ddG\" " .
+dsystem ("${startPath}/lib/RNAddG_compute_CPP  $file_outputTXT  -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN " .
+#                "| ${startPath}/lib/RNAddG_compute.pl -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN " .
+                 "| ${startPath}/lib/modify_column.pl -c 2,3 -s $CDS_FLANK " .
+                 "| ${startPath}/lib/modify_column.pl -c 9,10,11,12,13,14 -m '\"-1\"' " .
+                 "| ${startPath}/lib/cut.pl -f 1-15,14 " .
+                 "| ${startPath}/lib/modify_column.pl -c 15 -sc 14 " .
+                 "| ${startPath}/lib/cut.pl -f 1-12,14-16,13 " .
+                 "| ${startPath}/lib/modify_column.pl -c 9,10,11,12,13,14,15 -p 2 -m '\"-1\"' " .
+                 "| ${startPath}/lib/cap.pl \"UTR,microRNA,Start,End,Seed,Mismatchs,G:U,Loop,Site size,dGduplex,dG5,dG3,dG0,dG1,dGopen,ddG\" " .
                  "> " . $output_dir . $prefix . "pita_results.tab");
 
 ## Clean up

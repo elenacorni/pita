@@ -114,7 +114,7 @@ int main(int argc, char **argv){
     }//fine while read_rows
 
   int arraySize = headerInputArray.size();
-  cout << "\nComputing " << arraySize << " results: ";
+  cerr << "\nComputing " << arraySize << " results: ";
 
   vector<string> dGduplexesOutputArray = getdGduplexes(dGduplexesInputArray);
   vector<string> ddGOutputArray        = getddG(ddGInputArray, downstream_rest);
@@ -137,7 +137,7 @@ int main(int argc, char **argv){
   }
 //contatore ++;
 //  }//fine while
-  cout << " Done.\n";
+  cerr << " Done.\n";
   return 0;
 }
 
@@ -187,7 +187,7 @@ vector<string> getddG(vector<string> vIn, int downstream_rest){
     cmd << " " << RNAddG_EXE_DIR << "/RNAddG4 -u " << upstream_rest << " -s " << bindEnd << " -f " << to_string(target_len) << " -t " << to_string(target_len) << " < tmp_seqfile2";
 
     int ii;
-    cout <<  "Calling RNAddG with " << vIn.size() << " targets... \n";
+    cerr <<  "Calling RNAddG with " << vIn.size() << " targets... \n";
 
     //my @resArray = split (/\n/, `$cmd`);
     string result_of_cmd = GetStdoutFromCommand(cmd.str());
@@ -239,7 +239,7 @@ vector<string> getdGduplexes(vector<string> vIn){
     std::stringstream cmd;
     cmd << " " <<  RNAddG_EXE_DIR << "/RNAduplex -5 0 < tmp_seqfile1";
 
-    cout << "Calling RNAduplex with " << insize << " targets... ";
+    cerr << "Calling RNAduplex with " << insize << " targets... ";
 
     //my $result_of_cmd = `$cmd`;
     string result_of_cmd = GetStdoutFromCommand(cmd.str());
