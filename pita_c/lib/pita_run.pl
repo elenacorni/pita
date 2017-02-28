@@ -1,8 +1,11 @@
 #!/usr/bin/perl
 
 use strict;
+use File::Basename;
+my $catPath = "cat theFullPath | tr -d \"\\r\\n\"";
+my $startPath = `$catPath`;
 
-require "/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/load_args.pl";
+require "${startPath}/lib/load_args.pl";
 
 if ($ARGV[0] eq "--help")
 {
@@ -56,15 +59,15 @@ if ($use_stab)
 }
 else
 {
-	dsystem ("cat $utr_fn | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/dos2unix.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/fasta2stab.pl > tmp_utr_stab_$r");
-	dsystem ("cat $mir_fn | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/dos2unix.pl | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/fasta2stab.pl > tmp_mir_stab_$r");
+	dsystem ("cat $utr_fn | ${startPath}/lib/dos2unix.pl | ${startPath}/lib/fasta2stab.pl > tmp_utr_stab_$r");
+	dsystem ("cat $mir_fn | ${startPath}/lib/dos2unix.pl | ${startPath}/lib/fasta2stab.pl > tmp_mir_stab_$r");
 }
 
 if ($upstream_fn eq "")
 {
 	dsystem ("cat tmp_utr_stab_$r " .
 			 "| cut -f 1 " .
-			 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s $POLY_A " .
+			 "| ${startPath}/lib/add_column.pl -s $POLY_A " .
 			 "> tmp_prefix_$r;");
 }
 else
@@ -75,33 +78,33 @@ else
 	}
 	else
 	{
-		dsystem ("cat $upstream_fn | /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/fasta2stab.pl > tmp_upstream_stab_$r");
+		dsystem ("cat $upstream_fn | ${startPath}/lib/fasta2stab.pl > tmp_upstream_stab_$r");
 	}
 	
 	dsystem ("cat tmp_utr_stab_$r " .
 			 "| cut -f 1 " .
-			 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s $POLY_A " .
-			 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/join.pl -o A - tmp_upstream_stab_$r " .
-			 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/merge_columns.pl -1 1 -2 2 " .
+			 "| ${startPath}/lib/add_column.pl -s $POLY_A " .
+			 "| ${startPath}/lib/join.pl -o A - tmp_upstream_stab_$r " .
+			 "| ${startPath}/lib/merge_columns.pl -1 1 -2 2 " .
 			 "> tmp_ext_utr_$r;");
 	
 	dsystem ("cat tmp_ext_utr_$r " .
-			 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/stab2length.pl " .
-			 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1,1,2,2 " .
-			 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2 -s " . ($CDS_FLANK-1) . " " .
+			 "| ${startPath}/lib/stab2length.pl " .
+			 "| ${startPath}/lib/cut.pl -f 1,1,2,2 " .
+			 "| ${startPath}/lib/modify_column.pl -c 2 -s " . ($CDS_FLANK-1) . " " .
 			 ">tmp_ext_utr_pos_$r");
 			 
 	dsystem ("cat tmp_ext_utr_$r " .
-			 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/extract_sequence.pl -f tmp_ext_utr_pos_$r " .
+			 "| ${startPath}/lib/extract_sequence.pl -f tmp_ext_utr_pos_$r " .
 			 "> tmp_prefix_$r");
 }
 
 my $ext_utr_fn = $output_dir . $prefix . "ext_utr.stab";
 
-dsystem ("/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/join.pl tmp_prefix_$r tmp_utr_stab_$r " .
-         "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/add_column.pl -s $POLY_A " .
-         "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/merge_columns.pl -1 1 -2 2 " .
-         "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/merge_columns.pl -1 1 -2 2 " .
+dsystem ("${startPath}/lib/join.pl tmp_prefix_$r tmp_utr_stab_$r " .
+         "| ${startPath}/lib/add_column.pl -s $POLY_A " .
+         "| ${startPath}/lib/merge_columns.pl -1 1 -2 2 " .
+         "| ${startPath}/lib/merge_columns.pl -1 1 -2 2 " .
          "> " . $ext_utr_fn);
 
 
@@ -109,7 +112,7 @@ dsystem ("/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/join.pl tmp_prefix_$r 
 ## Step 1: Search potential targets
 
 print STDERR "Finding potential targets...\n";
-dsystem ("/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/find_potential_mirna_targets.pl tmp_utr_stab_$r -f tmp_mir_stab_$r $echoed_pt_args > tmp_pt_$r");
+dsystem ("${startPath}/lib/find_potential_mirna_targets.pl tmp_utr_stab_$r -f tmp_mir_stab_$r $echoed_pt_args > tmp_pt_$r");
 
 my $n_potential_targets = `wc -l tmp_pt_$r | sed 's/^ *//g' | cut -f 1 -d ' '`;
 if (length($limit) > 0 and $n_potential_targets > $limit)
@@ -119,25 +122,24 @@ if (length($limit) > 0 and $n_potential_targets > $limit)
 }
 
 ## Step 2: Compute site scores
-my $file_outputTXT = "file_di_output_dai_comandi_precedenti";
+
 print STDERR "Computing site scores...\n";
 dsystem ("cat tmp_pt_$r " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/join.pl -1 2 - $ext_utr_fn " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-9,11- " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -a $CDS_FLANK " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/join.pl -1 2 - $ext_utr_fn " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-9,11- " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -a $CDS_FLANK " .
                  "> " . $file_outputTXT );
 #cpp:
 dsystem ("/home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/RNAddG_compute_CPP  $file_outputTXT  -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN " .
-#		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/RNAddG_compute.pl -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -s $CDS_FLANK " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14 -m '\"-1\"' " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-15,14 " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 15 -sc 14 " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-12,14-16,13 " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14,15 -p 2 -m '\"-1\"' " .
-		 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cap.pl \"UTR,microRNA,Start,End,Seed,Mismatchs,G:U,Loop,Site size,dGduplex,dG5,dG3,dG0,dG1,dGopen,ddG\" " .
-		 "> " . $output_dir . $prefix . "pita_results.tab");
-
+#                "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/RNAddG_compute.pl -ddgarea $DDG_AREA -upstream_rest $FLANK_UP -downstream_rest $FLANK_DOWN " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 2,3 -s $CDS_FLANK " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14 -m '\"-1\"' " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-15,14 " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 15 -sc 14 " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cut.pl -f 1-12,14-16,13 " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/modify_column.pl -c 9,10,11,12,13,14,15 -p 2 -m '\"-1\"' " .
+                 "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/cap.pl \"UTR,microRNA,Start,End,Seed,Mismatchs,G:U,Loop,Site size,dGduplex,dG5,dG3,dG0,dG1,dGopen,ddG\" " .
+                 "> " . $output_dir . $prefix . "pita_results.tab");
 
 ## Clean up
 if (not ($debug))
@@ -159,7 +161,7 @@ sub dsystem {
 
 
 __DATA__
-syntax: /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/pita_run.pl [OPTIONS]
+syntax: ${startPath}/lib/pita_run.pl [OPTIONS]
 
 Execute the PITA algorithm for identifying and scoring microRNA target sites.
 
