@@ -122,7 +122,7 @@ if (length($limit) > 0 and $n_potential_targets > $limit)
 }
 
 ## Step 2: Compute site scores
-
+my $file_outputTXT = "output4RNAddG_compute_CPP";
 print STDERR "Computing site scores...\n";
 dsystem ("cat tmp_pt_$r " .
                  "| /home/HPC/elena.corni/PITA_prog/pita/pita_c/lib/join.pl -1 2 - $ext_utr_fn " .
