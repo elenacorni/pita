@@ -16,6 +16,9 @@
 #include <stdlib.h>
 #include "../helper_string.h"
 
+//#include <time.h>
+//#include <sys/time.h>
+
 using namespace std;
 
 char const* const RNAHYBRID_EXE_DIR = "Bin/RNAHybrid/RNAhybrid-2.1/src";
@@ -33,6 +36,9 @@ string GetStdoutFromCommand(string cmd);
 
 //##############################################################################
 int main(int argc, char **argv){
+
+  //struct timeval start, stop;
+  //gettimeofday(&start,NULL);
   if(checkCmdLineFlag(argc, (const char**)argv, "help")){
 	printHelp();
   	return 0;
@@ -138,6 +144,10 @@ int main(int argc, char **argv){
 //contatore ++;
 //  }//fine while
   cerr << " Done.\n";
+  //gettimeofday(&stop,NULL);
+  //double secTotal = 0.0;
+  //secTotal = (stop.tv_sec - start.tv_sec) + ((stop.tv_usec - start.tv_usec)/1000000.0);
+  //cerr << "TOTAL TIME OF RNA...CPP: " << secTotal << " s\n\n";
   return 0;
 }
 
@@ -187,7 +197,7 @@ vector<string> getddG(vector<string> vIn, int downstream_rest){
     cmd << " " << RNAddG_EXE_DIR << "/RNAddG4 -u " << upstream_rest << " -s " << bindEnd << " -f " << to_string(target_len) << " -t " << to_string(target_len) << " < tmp_seqfile2";
 
     int ii;
-    cerr <<  "Calling RNAddG with " << vIn.size() << " targets... \n";
+    cerr <<  "Calling RNAddG with " << vIn.size() << " targets...";
 
     //my @resArray = split (/\n/, `$cmd`);
     string result_of_cmd = GetStdoutFromCommand(cmd.str());
