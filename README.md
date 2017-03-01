@@ -8,7 +8,7 @@ Non si potrà quindi spostare il codice in altre cartelle senza prima aver cambi
 Al fine di eliminare questa dipendenza hard-coded sono stati modificati i sorgenti in modo tale che automaticamente ad ogni esecuzione prendano il path della cartella corrente.  
 L'applicazione modificata è stata messa in `64bit_exe_pita_prediction_no_path_dep.tar.gz`.
 
-## Esecuzione Perl e compilazione CPP:
+### Esecuzione Perl e compilazione CPP:
 Run PITA:
 ```
 perl pita_prediction.pl -utr input_utr.fa -mir input_microRNAs.fa -prefix <NOME_OUTPUT> [OPZIONI FACOLTATIVE (--help)]
