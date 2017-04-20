@@ -30,7 +30,7 @@ Cambiare:
 $file =~ s/\${HOME}/$home/ge;
 in:
 $file =~ s/\$\{HOME\}/$home/ge;
-
+.................................................
 - Errore:
 Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at /home/elena/Desktop/pita/pita_c/lib/join.pl line 205.
 + Soluzione:
@@ -64,7 +64,7 @@ gcc  -std=gnu89 -g -O2 -fPIC   -o RNAddG4  RNAddG4.o ../lib/libRNA.a -lm
 ```
 
 ### Troubleshouting:
----
+
 ```diff
 - Errore:
 ../lib/libRNA.a(subopt.o): In function `repeat':
@@ -98,7 +98,7 @@ rna_algebra.h:203:14: error: ‘INT_MIN’ was not declared in this scope
 + Soluzione:
 >> Aggiungere a "rna_algebra.h" : #include <limits.h>
 ```
----
+
 ```diff
 - Errore:
 ppforestsz.t.cpp:43:9: error: ‘memcpy’ was not declared in this scope
@@ -116,7 +116,7 @@ rna_profile_alignment.cpp:306:44: error: ‘memset’ was not declared in this s
 + Soluzione:
 >> Nel file indicato aggiungere: #include <string.h>
 ```
----
+
 ```diff
 - Errore:
 ppforestbase.h:98:20: error: extra qualification ‘PPForestBase::’ on member ‘getMaxLength’ [-fpermissive]
@@ -147,7 +147,7 @@ inline size_type getMaxLength(size_type i) const
         return m_sumUpCSF[i]+j-1;
     }
 ```
----
+
 ```diff
 - Errore:
 main.c:30:14: error: conflicting types for ‘getline’
