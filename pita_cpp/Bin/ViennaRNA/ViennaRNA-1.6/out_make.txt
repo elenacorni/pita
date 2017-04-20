@@ -1,0 +1,238 @@
+make  all-recursive
+make[1]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6'
+Making all in lib
+make[2]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/lib'
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT dist_vars.o -MD -MP -MF ".deps/dist_vars.Tpo" -c -o dist_vars.o dist_vars.c; \
+then mv -f ".deps/dist_vars.Tpo" ".deps/dist_vars.Po"; else rm -f ".deps/dist_vars.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT fold_vars.o -MD -MP -MF ".deps/fold_vars.Tpo" -c -o fold_vars.o fold_vars.c; \
+then mv -f ".deps/fold_vars.Tpo" ".deps/fold_vars.Po"; else rm -f ".deps/fold_vars.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT part_func.o -MD -MP -MF ".deps/part_func.Tpo" -c -o part_func.o part_func.c; \
+then mv -f ".deps/part_func.Tpo" ".deps/part_func.Po"; else rm -f ".deps/part_func.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT read_epars.o -MD -MP -MF ".deps/read_epars.Tpo" -c -o read_epars.o read_epars.c; \
+then mv -f ".deps/read_epars.Tpo" ".deps/read_epars.Po"; else rm -f ".deps/read_epars.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT treedist.o -MD -MP -MF ".deps/treedist.Tpo" -c -o treedist.o treedist.c; \
+then mv -f ".deps/treedist.Tpo" ".deps/treedist.Po"; else rm -f ".deps/treedist.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT energy_par.o -MD -MP -MF ".deps/energy_par.Tpo" -c -o energy_par.o energy_par.c; \
+then mv -f ".deps/energy_par.Tpo" ".deps/energy_par.Po"; else rm -f ".deps/energy_par.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT inverse.o -MD -MP -MF ".deps/inverse.Tpo" -c -o inverse.o inverse.c; \
+then mv -f ".deps/inverse.Tpo" ".deps/inverse.Po"; else rm -f ".deps/inverse.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT ProfileDist.o -MD -MP -MF ".deps/ProfileDist.Tpo" -c -o ProfileDist.o ProfileDist.c; \
+then mv -f ".deps/ProfileDist.Tpo" ".deps/ProfileDist.Po"; else rm -f ".deps/ProfileDist.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAstruct.o -MD -MP -MF ".deps/RNAstruct.Tpo" -c -o RNAstruct.o RNAstruct.c; \
+then mv -f ".deps/RNAstruct.Tpo" ".deps/RNAstruct.Po"; else rm -f ".deps/RNAstruct.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT utils.o -MD -MP -MF ".deps/utils.Tpo" -c -o utils.o utils.c; \
+then mv -f ".deps/utils.Tpo" ".deps/utils.Po"; else rm -f ".deps/utils.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT fold.o -MD -MP -MF ".deps/fold.Tpo" -c -o fold.o fold.c; \
+then mv -f ".deps/fold.Tpo" ".deps/fold.Po"; else rm -f ".deps/fold.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT naview.o -MD -MP -MF ".deps/naview.Tpo" -c -o naview.o naview.c; \
+then mv -f ".deps/naview.Tpo" ".deps/naview.Po"; else rm -f ".deps/naview.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT PS_dot.o -MD -MP -MF ".deps/PS_dot.Tpo" -c -o PS_dot.o PS_dot.c; \
+then mv -f ".deps/PS_dot.Tpo" ".deps/PS_dot.Po"; else rm -f ".deps/PS_dot.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT stringdist.o -MD -MP -MF ".deps/stringdist.Tpo" -c -o stringdist.o stringdist.c; \
+then mv -f ".deps/stringdist.Tpo" ".deps/stringdist.Po"; else rm -f ".deps/stringdist.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT params.o -MD -MP -MF ".deps/params.Tpo" -c -o params.o params.c; \
+then mv -f ".deps/params.Tpo" ".deps/params.Po"; else rm -f ".deps/params.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT subopt.o -MD -MP -MF ".deps/subopt.Tpo" -c -o subopt.o subopt.c; \
+then mv -f ".deps/subopt.Tpo" ".deps/subopt.Po"; else rm -f ".deps/subopt.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT list.o -MD -MP -MF ".deps/list.Tpo" -c -o list.o list.c; \
+then mv -f ".deps/list.Tpo" ".deps/list.Po"; else rm -f ".deps/list.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT Lfold.o -MD -MP -MF ".deps/Lfold.Tpo" -c -o Lfold.o Lfold.c; \
+then mv -f ".deps/Lfold.Tpo" ".deps/Lfold.Po"; else rm -f ".deps/Lfold.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT cofold.o -MD -MP -MF ".deps/cofold.Tpo" -c -o cofold.o cofold.c; \
+then mv -f ".deps/cofold.Tpo" ".deps/cofold.Po"; else rm -f ".deps/cofold.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT part_func_co.o -MD -MP -MF ".deps/part_func_co.Tpo" -c -o part_func_co.o part_func_co.c; \
+then mv -f ".deps/part_func_co.Tpo" ".deps/part_func_co.Po"; else rm -f ".deps/part_func_co.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT ProfileAln.o -MD -MP -MF ".deps/ProfileAln.Tpo" -c -o ProfileAln.o ProfileAln.c; \
+then mv -f ".deps/ProfileAln.Tpo" ".deps/ProfileAln.Po"; else rm -f ".deps/ProfileAln.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT duplex.o -MD -MP -MF ".deps/duplex.Tpo" -c -o duplex.o duplex.c; \
+then mv -f ".deps/duplex.Tpo" ".deps/duplex.Po"; else rm -f ".deps/duplex.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT alifold.o -MD -MP -MF ".deps/alifold.Tpo" -c -o alifold.o alifold.c; \
+then mv -f ".deps/alifold.Tpo" ".deps/alifold.Po"; else rm -f ".deps/alifold.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT alipfold.o -MD -MP -MF ".deps/alipfold.Tpo" -c -o alipfold.o alipfold.c; \
+then mv -f ".deps/alipfold.Tpo" ".deps/alipfold.Po"; else rm -f ".deps/alipfold.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT aln_util.o -MD -MP -MF ".deps/aln_util.Tpo" -c -o aln_util.o aln_util.c; \
+then mv -f ".deps/aln_util.Tpo" ".deps/aln_util.Po"; else rm -f ".deps/aln_util.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT LPfold.o -MD -MP -MF ".deps/LPfold.Tpo" -c -o LPfold.o LPfold.c; \
+then mv -f ".deps/LPfold.Tpo" ".deps/LPfold.Po"; else rm -f ".deps/LPfold.Tpo"; exit 1; fi
+rm -f libRNA.a
+ar cru libRNA.a dist_vars.o fold_vars.o part_func.o read_epars.o treedist.o energy_par.o inverse.o ProfileDist.o RNAstruct.o utils.o fold.o naview.o PS_dot.o stringdist.o params.o subopt.o list.o Lfold.o cofold.o part_func_co.o ProfileAln.o duplex.o alifold.o alipfold.o aln_util.o LPfold.o 
+ranlib libRNA.a
+make[2]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/lib'
+Making all in Progs
+make[2]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Progs'
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAfold.o -MD -MP -MF ".deps/RNAfold.Tpo" -c -o RNAfold.o RNAfold.c; \
+then mv -f ".deps/RNAfold.Tpo" ".deps/RNAfold.Po"; else rm -f ".deps/RNAfold.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAfold  RNAfold.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAeval.o -MD -MP -MF ".deps/RNAeval.Tpo" -c -o RNAeval.o RNAeval.c; \
+then mv -f ".deps/RNAeval.Tpo" ".deps/RNAeval.Po"; else rm -f ".deps/RNAeval.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAeval  RNAeval.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAheat.o -MD -MP -MF ".deps/RNAheat.Tpo" -c -o RNAheat.o RNAheat.c; \
+then mv -f ".deps/RNAheat.Tpo" ".deps/RNAheat.Po"; else rm -f ".deps/RNAheat.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAheat  RNAheat.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNApdist.o -MD -MP -MF ".deps/RNApdist.Tpo" -c -o RNApdist.o RNApdist.c; \
+then mv -f ".deps/RNApdist.Tpo" ".deps/RNApdist.Po"; else rm -f ".deps/RNApdist.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNApdist  RNApdist.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAdistance.o -MD -MP -MF ".deps/RNAdistance.Tpo" -c -o RNAdistance.o RNAdistance.c; \
+then mv -f ".deps/RNAdistance.Tpo" ".deps/RNAdistance.Po"; else rm -f ".deps/RNAdistance.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAdistance  RNAdistance.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAinverse.o -MD -MP -MF ".deps/RNAinverse.Tpo" -c -o RNAinverse.o RNAinverse.c; \
+then mv -f ".deps/RNAinverse.Tpo" ".deps/RNAinverse.Po"; else rm -f ".deps/RNAinverse.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAinverse  RNAinverse.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAplot.o -MD -MP -MF ".deps/RNAplot.Tpo" -c -o RNAplot.o RNAplot.c; \
+then mv -f ".deps/RNAplot.Tpo" ".deps/RNAplot.Po"; else rm -f ".deps/RNAplot.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAplot  RNAplot.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAsubopt.o -MD -MP -MF ".deps/RNAsubopt.Tpo" -c -o RNAsubopt.o RNAsubopt.c; \
+then mv -f ".deps/RNAsubopt.Tpo" ".deps/RNAsubopt.Po"; else rm -f ".deps/RNAsubopt.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAsubopt  RNAsubopt.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNALfold.o -MD -MP -MF ".deps/RNALfold.Tpo" -c -o RNALfold.o RNALfold.c; \
+then mv -f ".deps/RNALfold.Tpo" ".deps/RNALfold.Po"; else rm -f ".deps/RNALfold.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNALfold  RNALfold.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAcofold.o -MD -MP -MF ".deps/RNAcofold.Tpo" -c -o RNAcofold.o RNAcofold.c; \
+then mv -f ".deps/RNAcofold.Tpo" ".deps/RNAcofold.Po"; else rm -f ".deps/RNAcofold.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAcofold  RNAcofold.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNApaln.o -MD -MP -MF ".deps/RNApaln.Tpo" -c -o RNApaln.o RNApaln.c; \
+then mv -f ".deps/RNApaln.Tpo" ".deps/RNApaln.Po"; else rm -f ".deps/RNApaln.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNApaln  RNApaln.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAduplex.o -MD -MP -MF ".deps/RNAduplex.Tpo" -c -o RNAduplex.o RNAduplex.c; \
+then mv -f ".deps/RNAduplex.Tpo" ".deps/RNAduplex.Po"; else rm -f ".deps/RNAduplex.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAduplex  RNAduplex.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAalifold.o -MD -MP -MF ".deps/RNAalifold.Tpo" -c -o RNAalifold.o RNAalifold.c; \
+then mv -f ".deps/RNAalifold.Tpo" ".deps/RNAalifold.Po"; else rm -f ".deps/RNAalifold.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAalifold  RNAalifold.o ../lib/libRNA.a -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAplfold.o -MD -MP -MF ".deps/RNAplfold.Tpo" -c -o RNAplfold.o RNAplfold.c; \
+then mv -f ".deps/RNAplfold.Tpo" ".deps/RNAplfold.Po"; else rm -f ".deps/RNAplfold.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAplfold  RNAplfold.o ../lib/libRNA.a -lm 
+make[2]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Progs'
+Making all in man
+make[2]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/man'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/man'
+Making all in Utils
+make[2]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Utils'
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT b2ct.o -MD -MP -MF ".deps/b2ct.Tpo" -c -o b2ct.o b2ct.c; \
+then mv -f ".deps/b2ct.Tpo" ".deps/b2ct.Po"; else rm -f ".deps/b2ct.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o b2ct  b2ct.o -L../lib -lRNA -lm 
+if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT popt.o -MD -MP -MF ".deps/popt.Tpo" -c -o popt.o popt.c; \
+then mv -f ".deps/popt.Tpo" ".deps/popt.Po"; else rm -f ".deps/popt.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC   -o popt  popt.o -L../lib -lRNA -lm 
+make[2]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Utils'
+Making all in H
+make[2]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/H'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/H'
+Making all in Perl
+make[2]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Perl'
+/usr/bin/perl Makefile.PL
+Generating a Unix-style Makefile.perl
+Writing Makefile.perl for RNA
+Writing MYMETA.yml and MYMETA.json
+make -f Makefile.perl
+make[3]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Perl'
+cp RNA.pm blib/lib/RNA.pm
+Running Mkbootstrap for RNA ()
+chmod 644 "RNA.bs"
+x86_64-linux-gnu-gcc -c   -D_REENTRANT -D_GNU_SOURCE -DDEBIAN -fwrapv -fno-strict-aliasing -pipe -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -O2 -g   -DVERSION=\"0.2\" -DXS_VERSION=\"0.2\" -fPIC "-I/usr/lib/x86_64-linux-gnu/perl/5.22/CORE"   RNA_wrap.c
+rm -f blib/arch/auto/RNA/RNA.so
+x86_64-linux-gnu-gcc  -shared -L/usr/local/lib -fstack-protector-strong RNA_wrap.o  -o blib/arch/auto/RNA/RNA.so ../lib/libRNA.a	\
+   -lm  	\
+  
+chmod 755 blib/arch/auto/RNA/RNA.so
+"/usr/bin/perl" -MExtUtils::Command::MM -e 'cp_nonempty' -- RNA.bs blib/arch/auto/RNA/RNA.bs 644
+Manifying 1 pod document
+make[3]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Perl'
+make[2]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Perl'
+Making all in RNAforester
+make[2]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester'
+make  all-recursive
+make[3]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester'
+Making all in g2-0.70
+make[4]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester/g2-0.70'
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_device.c -o src/g2_device.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_ui_control.c -o src/g2_ui_control.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_util.c -o src/g2_util.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_fif.c -o src/g2_fif.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_virtual_device.c -o src/g2_virtual_device.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_physical_device.c -o src/g2_physical_device.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_graphic_pd.c -o src/g2_graphic_pd.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_control_pd.c -o src/g2_control_pd.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_ui_graphic.c -o src/g2_ui_graphic.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_ui_virtual_device.c -o src/g2_ui_virtual_device.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_ui_device.c -o src/g2_ui_device.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/g2_splines.c -o src/g2_splines.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/PS/g2_PS.c -o src/PS/g2_PS.o
+gcc -I./src -std=gnu89 -g -O2 -fPIC  -I/usr/local/include -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DLINUX=1 -DX_DISPLAY_MISSING=1 -DDO_PS=1 -DDO_FIG=1 -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_LIMITS_H=1  -c src/FIG/g2_FIG.c -o src/FIG/g2_FIG.o
+ar -cr libg2.a ./src/g2_device.o ./src/g2_ui_control.o ./src/g2_util.o ./src/g2_fif.o ./src/g2_virtual_device.o ./src/g2_physical_device.o ./src/g2_graphic_pd.o ./src/g2_control_pd.o ./src/g2_ui_graphic.o ./src/g2_ui_virtual_device.o ./src/g2_ui_device.o ./src/g2_splines.o ./src/PS/g2_PS.o ./src/FIG/g2_FIG.o
+test ! -n "ranlib" || ranlib libg2.a
+test -d ./include || mkdir ./include
+cp ./src/g2.h ./src/PS/g2_PS.h ./src/FIG/g2_FIG.h    ./include/
+make[4]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester/g2-0.70'
+Making all in src
+make[4]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester/src'
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT Arguments.o -MD -MP -MF ".deps/Arguments.Tpo" -c -o Arguments.o Arguments.cpp; \
+then mv -f ".deps/Arguments.Tpo" ".deps/Arguments.Po"; else rm -f ".deps/Arguments.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/  -std=gnu89 -g -O2 -fPIC -MT glib.o -MD -MP -MF ".deps/glib.Tpo" -c -o glib.o glib.c; \
+then mv -f ".deps/glib.Tpo" ".deps/glib.Po"; else rm -f ".deps/glib.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT main.o -MD -MP -MF ".deps/main.Tpo" -c -o main.o main.cpp; \
+then mv -f ".deps/main.Tpo" ".deps/main.Po"; else rm -f ".deps/main.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT ppforestbase.o -MD -MP -MF ".deps/ppforestbase.Tpo" -c -o ppforestbase.o ppforestbase.cpp; \
+then mv -f ".deps/ppforestbase.Tpo" ".deps/ppforestbase.Po"; else rm -f ".deps/ppforestbase.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT progressive_align.o -MD -MP -MF ".deps/progressive_align.Tpo" -c -o progressive_align.o progressive_align.cpp; \
+then mv -f ".deps/progressive_align.Tpo" ".deps/progressive_align.Po"; else rm -f ".deps/progressive_align.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT rna_profile_alignment.o -MD -MP -MF ".deps/rna_profile_alignment.Tpo" -c -o rna_profile_alignment.o rna_profile_alignment.cpp; \
+then mv -f ".deps/rna_profile_alignment.Tpo" ".deps/rna_profile_alignment.Po"; else rm -f ".deps/rna_profile_alignment.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT rna_alignment.o -MD -MP -MF ".deps/rna_alignment.Tpo" -c -o rna_alignment.o rna_alignment.cpp; \
+then mv -f ".deps/rna_alignment.Tpo" ".deps/rna_alignment.Po"; else rm -f ".deps/rna_alignment.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT rna_algebra.o -MD -MP -MF ".deps/rna_algebra.Tpo" -c -o rna_algebra.o rna_algebra.cpp; \
+then mv -f ".deps/rna_algebra.Tpo" ".deps/rna_algebra.Po"; else rm -f ".deps/rna_algebra.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT rna_alphabet.o -MD -MP -MF ".deps/rna_alphabet.Tpo" -c -o rna_alphabet.o rna_alphabet.cpp; \
+then mv -f ".deps/rna_alphabet.Tpo" ".deps/rna_alphabet.Po"; else rm -f ".deps/rna_alphabet.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT rnaforest.o -MD -MP -MF ".deps/rnaforest.Tpo" -c -o rnaforest.o rnaforest.cpp; \
+then mv -f ".deps/rnaforest.Tpo" ".deps/rnaforest.Po"; else rm -f ".deps/rnaforest.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT rnaforestsz.o -MD -MP -MF ".deps/rnaforestsz.Tpo" -c -o rnaforestsz.o rnaforestsz.cpp; \
+then mv -f ".deps/rnaforestsz.Tpo" ".deps/rnaforestsz.Po"; else rm -f ".deps/rnaforestsz.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT rnafuncs.o -MD -MP -MF ".deps/rnafuncs.Tpo" -c -o rnafuncs.o rnafuncs.cpp; \
+then mv -f ".deps/rnafuncs.Tpo" ".deps/rnafuncs.Po"; else rm -f ".deps/rnafuncs.Tpo"; exit 1; fi
+if g++ -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/ -Wall  -g -O2 -MT rnaforester_options.o -MD -MP -MF ".deps/rnaforester_options.Tpo" -c -o rnaforester_options.o rnaforester_options.cpp; \
+then mv -f ".deps/rnaforester_options.Tpo" ".deps/rnaforester_options.Po"; else rm -f ".deps/rnaforester_options.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I..   -I../g2-0.70/include/  -std=gnu89 -g -O2 -fPIC -MT wmatch.o -MD -MP -MF ".deps/wmatch.Tpo" -c -o wmatch.o wmatch.c; \
+then mv -f ".deps/wmatch.Tpo" ".deps/wmatch.Po"; else rm -f ".deps/wmatch.Tpo"; exit 1; fi
+g++ -Wall  -g -O2  -L../g2-0.70 -L../../lib  -o RNAforester  Arguments.o glib.o main.o ppforestbase.o progressive_align.o rna_profile_alignment.o rna_alignment.o rna_algebra.o rna_alphabet.o rnaforest.o rnaforestsz.o rnafuncs.o rnaforester_options.o wmatch.o  -lg2 -lRNA 
+make[4]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester/src'
+Making all in man
+make[4]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester/man'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester/man'
+make[4]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester'
+make[4]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester'
+make[3]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester'
+make[2]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/RNAforester'
+Making all in Kinfold
+make[2]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Kinfold'
+make  all-recursive
+make[3]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Kinfold'
+Making all in Example
+make[4]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Kinfold/Example'
+make[4]: Nothing to be done for 'all'.
+make[4]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Kinfold/Example'
+make[4]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Kinfold'
+if gcc -DHAVE_CONFIG_H -I. -I. -I.   -I../H  -std=gnu89 -g -O2 -fPIC -MT baum.o -MD -MP -MF ".deps/baum.Tpo" -c -o baum.o baum.c; \
+then mv -f ".deps/baum.Tpo" ".deps/baum.Po"; else rm -f ".deps/baum.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.   -I../H  -std=gnu89 -g -O2 -fPIC -MT cache.o -MD -MP -MF ".deps/cache.Tpo" -c -o cache.o cache.c; \
+then mv -f ".deps/cache.Tpo" ".deps/cache.Po"; else rm -f ".deps/cache.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.   -I../H  -std=gnu89 -g -O2 -fPIC -MT globals.o -MD -MP -MF ".deps/globals.Tpo" -c -o globals.o globals.c; \
+then mv -f ".deps/globals.Tpo" ".deps/globals.Po"; else rm -f ".deps/globals.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.   -I../H  -std=gnu89 -g -O2 -fPIC -MT main.o -MD -MP -MF ".deps/main.Tpo" -c -o main.o main.c; \
+then mv -f ".deps/main.Tpo" ".deps/main.Po"; else rm -f ".deps/main.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.   -I../H  -std=gnu89 -g -O2 -fPIC -MT nachbar.o -MD -MP -MF ".deps/nachbar.Tpo" -c -o nachbar.o nachbar.c; \
+then mv -f ".deps/nachbar.Tpo" ".deps/nachbar.Po"; else rm -f ".deps/nachbar.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.   -I../H  -std=gnu89 -g -O2 -fPIC -MT getopt.o -MD -MP -MF ".deps/getopt.Tpo" -c -o getopt.o getopt.c; \
+then mv -f ".deps/getopt.Tpo" ".deps/getopt.Po"; else rm -f ".deps/getopt.Tpo"; exit 1; fi
+if gcc -DHAVE_CONFIG_H -I. -I. -I.   -I../H  -std=gnu89 -g -O2 -fPIC -MT getopt1.o -MD -MP -MF ".deps/getopt1.Tpo" -c -o getopt1.o getopt1.c; \
+then mv -f ".deps/getopt1.Tpo" ".deps/getopt1.Po"; else rm -f ".deps/getopt1.Tpo"; exit 1; fi
+gcc  -std=gnu89 -g -O2 -fPIC  -L../lib  -o Kinfold  baum.o cache.o globals.o main.o nachbar.o getopt.o getopt1.o  -lRNA -lm 
+make[4]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Kinfold'
+make[3]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Kinfold'
+make[2]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6/Kinfold'
+make[2]: Entering directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6'
+make[2]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6'
+make[1]: Leaving directory '/home/elena/Desktop/pita/pita_c/Bin/ViennaRNA/ViennaRNA-1.6'
