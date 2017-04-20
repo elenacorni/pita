@@ -18,6 +18,29 @@ RNAddG_compute.cpp:
 ```
 g++  -std=c++11  RNAddG_compute.cpp  -o RNAddG_compute_CPP
 ```
+### Troubleshouting:
+Durante l'esecuzione di `pita_prediction.pl`:
+```diff
+- Errore:
+Calling RNAduplex with 0 targets... Unescaped left brace in regex is deprecated, passed through in regex; marked by <-- HERE in m/\${ <-- HERE HOME}/ at /home/elena/Desktop/pita/pita_c/lib/libfile.pl line 379.
+Unescaped left brace in regex is deprecated, passed through in regex; marked by <-- HERE in m/\${ <-- HERE HOME}/ at /home/elena/Desktop/pita/pita_c/lib/libfile.pl line 379.
++ Soluzione:
+Nel file libfile.pl line 379:
+Cambiare:
+$file =~ s/\${HOME}/$home/ge;
+in:
+$file =~ s/\$\{HOME\}/$home/ge;
+
+- Errore:
+Can't use 'defined(@array)' (Maybe you should just omit the defined()?) at /home/elena/Desktop/pita/pita_c/lib/join.pl line 205.
++ Soluzione:
+Nel file join.pl line 205:
+Cambiare:
+if(define(@fill_lines) and $#fill_lines>=0)
+in:
+if(@fill_lines and $#fill_lines>=0)
+
+```
 ---
 # Compilare libreria ViennaRNA-1.6
 Quickstart: Usually you'll just have to type:
@@ -26,6 +49,18 @@ Quickstart: Usually you'll just have to type:
 make
 # and (as root)
 make install
+```
+Per compilare `RNAddG4.c`:
+```sh
+# guardare quali sono i comandi per compilare gli altri codici dall'output del make:
+grep --color -Hr "RNAplfold" output_make.txt 
+out_make.txt:if gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAplfold.o -MD -MP -MF ".deps/RNAplfold.Tpo" -c -o RNAplfold.o RNAplfold.c; \
+out_make.txt:then mv -f ".deps/RNAplfold.Tpo" ".deps/RNAplfold.Po"; else rm -f ".deps/RNAplfold.Tpo"; exit 1; fi
+out_make.txt:gcc  -std=gnu89 -g -O2 -fPIC   -o RNAplfold  RNAplfold.o ../lib/libRNA.a -lm 
+
+# quindi fare...
+gcc -DHAVE_CONFIG_H -I. -I. -I.. -I../H    -std=gnu89 -g -O2 -fPIC -MT RNAddG4.o -MD -MP -MF ".deps/RNAddG4.Po" -c -o RNAddG4.o RNAddG4.c
+gcc  -std=gnu89 -g -O2 -fPIC   -o RNAddG4  RNAddG4.o ../lib/libRNA.a -lm
 ```
 
 ### Troubleshouting:
@@ -49,7 +84,7 @@ make: *** [all] Error 2
 + Soluzione:
 >> ./configure CFLAGS="-std=gnu89 -g -O2 -fPIC"
 ```
----
+
 ```diff
 - Errore:
 rna_algebra.h: In member function ‘virtual int IntDistRNA_Algebra::worst_score() const’:
