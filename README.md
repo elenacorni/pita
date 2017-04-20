@@ -45,7 +45,7 @@ if(@fill_lines and $#fill_lines>=0)
 # Compilare libreria ViennaRNA-1.6
 Quickstart: Usually you'll just have to type:
 ```sh
-./configure
+./configure (CFLAGS="-std=gnu89 -g -O2 -fPIC")
 make
 # and (as root)
 make install
